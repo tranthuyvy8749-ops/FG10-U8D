@@ -1,0 +1,2091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 8D: Grammar - The Passive (Student-led)</title>
+    <!-- Icons & Fonts -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        :root {
+            /* Science/Tech Vibrant Modern Theme */
+            --bg-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --primary: #0984e3; 
+            --secondary: #00cec9; 
+            --accent: #fd79a8; 
+            --dark: #2d3436;
+            --success: #00b894;
+            --danger: #d63031;
+            --font-head: 'Montserrat', sans-serif;
+            --font-body: 'Poppins', sans-serif;
+            --shadow: 0 10px 30px rgba(0,0,0,0.15);
+            --radius: 20px;
+            
+            /* Tug Game Colors */
+            --team-blue: #0984e3;
+            --team-red: #d63031;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 0px; 
+            transition: padding-bottom 0.3s;
+        }
+
+        /* --- Header --- */
+        header {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(12px);
+            padding: 1.5rem 2rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        @keyframes textShine {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+        
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .lucide-spin { animation: spin 2s linear infinite; }
+
+        header h1 {
+            font-family: var(--font-head);
+            font-weight: 900;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            background: linear-gradient(to right, #ffeaa7, #fd79a8, #00f2fe, #4facfe, #ffeaa7);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0px 3px 6px rgba(0,0,0,0.4));
+            animation: textShine 4s linear infinite;
+        }
+        
+        .header-subtitle {
+            font-size: 1.1rem; 
+            font-weight: 600;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .score-board {
+            background: rgba(0,0,0,0.25);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 2px solid rgba(255,255,255,0.4);
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        /* --- Navigation Tabs --- */
+        .nav-container {
+            padding: 1rem 2rem 0;
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 0.8rem 1.2rem;
+            border-radius: 15px 15px 0 0;
+            color: white;
+            font-family: var(--font-head);
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .tab-btn:hover { background: rgba(255,255,255,0.4); transform: translateY(-2px); }
+        .tab-btn.active {
+            background: var(--glass-bg);
+            color: var(--primary);
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.15);
+            z-index: 10;
+            border-color: transparent;
+        }
+
+        /* --- Main Content --- */
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .tab-panel { display: none; animation: fadeIn 0.4s ease-out; }
+        .tab-panel.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card {
+            background: var(--glass-bg);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+        
+        .card.alt-bg { background: linear-gradient(135deg, #ffffff 0%, #f0f8ff 100%); }
+
+        .card h2 {
+            font-family: var(--font-head);
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .card h2::before {
+            content: ''; display: block; width: 6px; height: 32px;
+            background: var(--secondary); border-radius: 4px;
+        }
+
+        /* --- Custom UI Elements --- */
+        .info-box {
+            background: #f1f2f6; border-left: 5px solid var(--primary);
+            padding: 18px; border-radius: 10px; margin-bottom: 20px; font-size: 1rem; line-height: 1.7;
+        }
+        
+        .grammar-box {
+            background: rgba(9, 132, 227, 0.05); border: 2px solid var(--primary);
+            padding: 20px; border-radius: 12px; margin-bottom: 25px;
+        }
+        .grammar-box h3 { color: var(--primary); margin-bottom: 15px; font-family: var(--font-head); }
+
+        .question-row {
+            margin-bottom: 1.2rem; background: white; padding: 1.2rem; border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03); border-left: 5px solid #dfe6e9;
+            display: flex; align-items: flex-start; gap: 8px; flex-wrap: wrap; font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        .question-row:hover { transform: translateX(5px); border-left-color: var(--secondary); box-shadow: 0 6px 15px rgba(0,0,0,0.08); }
+        .question-row span { flex: 1; min-width: 250px; font-size: 1.05rem; }
+        .question-row .q-num { flex: 0 0 auto; min-width: 20px; font-weight: 800; color: var(--primary); margin-top: 2px; margin-right: 4px; }
+        
+        .question-col {
+            display: flex; flex-direction: column; gap: 8px; flex: 1; width: 100%;
+        }
+        .theory-content {
+            margin-top: 15px;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .toggle-theory {
+            cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; transition: color 0.2s;
+        }
+        .toggle-theory:hover { color: var(--accent); }
+        
+        /* Updated Input CSS for Red/Green text */
+        input[type="text"], .gap-input, .writing-textarea {
+            border: 2px solid #b2bec3; padding: 12px 15px; border-radius: 8px;
+            font-family: var(--font-body); font-size: 1.05rem; flex: 2; min-width: 200px;
+            transition: all 0.3s; font-weight: 600; color: var(--dark);
+        }
+        input[type="text"]:focus, .gap-input:focus, .writing-textarea:focus {
+            outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(9, 132, 227, 0.15);
+        }
+        input[type="text"]:disabled, .gap-input:disabled, .writing-textarea:disabled {
+            background-color: #f1f2f6; cursor: not-allowed; opacity: 0.8; border-color: #dfe6e9;
+        }
+        
+        /* Font Colors explicitly changed to red/green */
+        input[type="text"].correct, .gap-input.correct, .writing-textarea.correct {
+            color: #00b894 !important; 
+            border-color: #00b894 !important;
+            background-color: rgba(0, 184, 148, 0.05);
+            font-weight: 800;
+        }
+        input[type="text"].incorrect, .gap-input.incorrect, .writing-textarea.incorrect {
+            color: #d63031 !important; 
+            border-color: #d63031 !important;
+            background-color: rgba(214, 48, 49, 0.05);
+            font-weight: 800;
+        }
+
+        .gap-input { width: 120px; text-align: center; display: inline-block; padding: 8px; margin: 0 5px; }
+        .small-input { width: 60px !important; text-align: center; flex: 0 0 auto !important; min-width: 60px !important;}
+        
+        .click-word {
+            cursor: pointer;
+            border-radius: 3px;
+            padding: 2px 3px;
+            margin: 0 -1px;
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+        }
+        .click-word:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        .click-word.state-1 { background-color: rgba(0, 206, 201, 0.3); }
+        .click-word.state-2 { background-color: rgba(253, 121, 168, 0.3); }
+        .click-word.state-3 { background-color: rgba(9, 132, 227, 0.3); }
+        .click-word.wrong { border-bottom-color: var(--danger); background-color: rgba(214, 48, 49, 0.15) !important; }
+        .click-word.correct { border-bottom-color: var(--success); }
+
+        /* --- Explanation Box --- */
+        .explanation-box {
+            width: 100%; margin-top: 8px; padding: 10px 15px; border-radius: 8px;
+            background-color: rgba(253, 121, 168, 0.15); border-left: 4px solid var(--danger);
+            color: var(--danger); font-size: 0.95rem; font-weight: 600; display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        /* --- Buttons --- */
+        .btn-group { margin-top: 2rem; display: flex; gap: 12px; flex-wrap: wrap; }
+        .btn {
+            padding: 12px 24px; border: none; border-radius: 50px; font-weight: 700;
+            font-family: var(--font-head); cursor: pointer; transition: all 0.2s;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .btn:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
+        .btn:active:not(:disabled) { transform: translateY(0); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+        .btn-check { background: var(--success); color: white; }
+        .btn-reset { background: #636e72; color: white; }
+        .btn-primary { background: var(--primary); color: white; }
+
+        /* --- Live Survey Chart Styles --- */
+        .survey-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .survey-box {
+            background: white; padding: 20px; border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-align: center; border-bottom: 4px solid var(--secondary);
+        }
+        .survey-box h4 { margin-bottom: 15px; color: var(--dark); font-size: 1.1rem; min-height: 40px; }
+        .survey-chart-container { height: 180px; width: 100%; margin-top: 15px; position: relative; }
+
+        /* --- TUG GAME --- */
+        .game-grid { display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 20px; margin-top: 15px; }
+
+        .team-game-column {
+            display: flex; flex-direction: column; gap: 10px; background: white; border-radius: 15px;
+            padding: 20px; border: 2px solid #E2E8F0; box-shadow: var(--shadow); position: relative;
+        }
+
+        .team-red-column { border-top: 8px solid var(--team-red); }
+        .team-blue-column { border-top: 8px solid var(--team-blue); }
+
+        .team-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .team-title { font-weight: 900; font-size: 1.2rem; letter-spacing: 1px; font-family: var(--font-head); }
+        .team-score-badge { 
+            background: var(--dark); color: white; font-family: monospace; font-size: 1.5rem; 
+            padding: 5px 15px; border-radius: 8px; font-weight: bold; border-bottom: 3px solid rgba(0,0,0,0.3);
+        }
+
+        .timer-circle {
+            width: 55px; height: 55px; border-radius: 50%; background: #f1f2f6;
+            display: flex; align-items: center; justify-content: center; font-weight: 900;
+            font-size: 1.2rem; color: var(--dark); box-shadow: inset 0 3px 6px rgba(0,0,0,0.1); border: 2px solid #dfe6e9;
+        }
+
+        .quiz-box { flex-grow: 1; display: flex; flex-direction: column; }
+        .question-text { font-weight: 700; margin-bottom: 20px; font-size: 1.1rem; min-height: 4rem; color: var(--dark); line-height: 1.5; }
+
+        .option-button {
+            width: 100%; padding: 14px; margin-bottom: 10px; background: #f8f9fa;
+            border: 2px solid #dfe6e9; border-radius: 10px; text-align: left; font-size: 1rem;
+            cursor: pointer; transition: all 0.2s; font-family: var(--font-body); font-weight: 600;
+        }
+        .option-button:hover:not(:disabled) { background: #eef2f3; border-color: var(--primary); transform: translateX(5px); }
+        .option-button.correct { background: var(--success); color: white; border-color: #00b894; box-shadow: 0 4px 10px rgba(0,184,148,0.3); }
+        .option-button.wrong { background: var(--danger); color: white; border-color: #d63031; }
+
+        .center-stage-container { display: flex; flex-direction: column; gap: 15px; }
+        .tug-visual-stage {
+            background: white; border-radius: 15px; position: relative; overflow: hidden;
+            border: 3px solid #E2E8F0; display: flex; flex-direction: column; align-items: center;
+            background-image: linear-gradient(to bottom, #f8fafc, #e2e8f0); flex-grow: 1; box-shadow: inset 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .stage-center-line {
+            position: absolute; left: 50%; top: 0; bottom: 0; width: 4px;
+            border-left: 4px dashed rgba(0,0,0,0.2); z-index: 1;
+        }
+
+        .tug-image-wrapper {
+            position: absolute; height: 100%; width: 100%; display: flex; align-items: center;
+            justify-content: center; transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 5;
+        }
+
+        .tug-image-wrapper img {
+            max-width: 95%; max-height: 85%; width: auto; height: auto; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+        }
+
+        .game-overlay-panel {
+            position: absolute; inset: 0; background: rgba(45, 52, 54, 0.95);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: white; z-index: 1000; text-align: center; padding: 20px;
+        }
+
+        /* --- Leaderboard Styles --- */
+        .leaderboard-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .leaderboard-table th, .leaderboard-table td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #dfe6e9; }
+        .leaderboard-table th { background-color: rgba(9, 132, 227, 0.1); color: var(--primary); }
+        .rank-1 { background-color: rgba(255, 215, 0, 0.15); font-weight: bold; }
+        .rank-2 { background-color: rgba(192, 192, 192, 0.15); font-weight: bold; }
+        .rank-3 { background-color: rgba(205, 127, 50, 0.15); font-weight: bold; }
+
+        /* --- Virtual Keyboard --- */
+        #virtual-keyboard {
+            position: fixed; bottom: -400px; left: 0; width: 100%; background: #2d3436;
+            padding: 15px 10px; z-index: 2000; transition: bottom 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            display: flex; flex-direction: column; gap: 8px;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.4); border-top: 3px solid var(--primary);
+        }
+        #virtual-keyboard.visible { bottom: 0; }
+        .kb-row { display: flex; justify-content: center; gap: 6px; }
+        .kb-key {
+            background: #636e72; color: white; border: none; border-radius: 8px; padding: 15px;
+            min-width: 35px; font-weight: bold; font-size: 1.2rem; cursor: pointer; flex: 1; max-width: 60px;
+            box-shadow: 0 3px 0 #2d3436; transition: all 0.1s;
+        }
+        .kb-key:active { background: var(--primary); transform: translateY(3px); box-shadow: 0 0 0 #2d3436; }
+        .kb-key.special { background: #b2bec3; color: #2d3436; max-width: 80px; font-size: 1rem; }
+        .kb-key.space { max-width: 300px; }
+        .kb-close {
+            position: absolute; top: -45px; right: 20px; background: var(--danger); color: white;
+            border: none; padding: 10px 20px; border-radius: 10px 10px 0 0; cursor: pointer; font-weight: 800;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.2); font-size: 1rem;
+        }
+
+        /* --- Overlays --- */
+        #login-overlay {
+            position: fixed; inset: 0; background: linear-gradient(135deg, rgba(79, 172, 254, 0.95), rgba(0, 242, 254, 0.95)); z-index: 3000;
+            display: flex; justify-content: center; align-items: center; flex-direction: column;
+        }
+        .login-card {
+            background: white; padding: 40px; border-radius: 20px; width: 90%; max-width: 420px;
+            text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.4); border-top: 8px solid var(--primary);
+        }
+
+        /* --- Checklist Styles --- */
+        .checklist-item {
+            display: flex; align-items: center; background: white; padding: 18px; margin-bottom: 12px;
+            border-radius: 12px; transition: all 0.3s; cursor: pointer; border: 2px solid #dfe6e9;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03); font-weight: 600; font-size: 1.1rem;
+        }
+        .checklist-item:hover { transform: translateX(5px); border-color: var(--primary); }
+        .checklist-item.checked { border-color: var(--success); background: rgba(0, 184, 148, 0.08); }
+        .checkbox-circle {
+            width: 28px; height: 28px; border: 2px solid #b2bec3; border-radius: 50%; margin-right: 18px;
+            display: flex; align-items: center; justify-content: center; color: white; transition: all 0.2s;
+            flex-shrink: 0; font-size: 1.2rem;
+        }
+        .checklist-item.checked .checkbox-circle { background: var(--success); border-color: var(--success); }
+        .checklist-item.checked .checkbox-circle::after { content: "✔"; font-weight: bold; }
+
+        @media (max-width: 768px) {
+            .game-grid { grid-template-columns: 1fr; height: auto; }
+            .center-stage-container { height: 280px; order: -1; }
+            header h1 { font-size: 1.8rem; }
+            .card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- AUTOSAVE TOAST -->
+    <div id="autosave-toast" style="position:fixed; top:20px; right:20px; background:var(--dark); color:white; padding:12px 25px; border-radius:50px; z-index:9999; display:none; opacity:0; transition: opacity 0.3s ease; box-shadow: var(--shadow); font-weight: 600;">
+        <i data-lucide="refresh-cw" class="lucide-spin"></i> Auto-saving...
+    </div>
+
+    <!-- LOGIN MODAL -->
+    <div id="login-overlay">
+        <div class="login-card">
+            <div style="background: var(--primary); color: white; width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; box-shadow: 0 8px 20px rgba(9, 132, 227, 0.4);">
+                <i data-lucide="microscope" size="40"></i>
+            </div>
+            <h2 style="justify-content: center; color: var(--dark); font-family: var(--font-head); font-weight: 900; font-size: 1.8rem;">Unit 8: Science</h2>
+            <p style="margin-bottom: 25px; color: #636e72; font-size: 1.1rem; font-weight: 500;">Lesson 8D: The Passive</p>
+            <input type="text" id="student-name" placeholder="Your Name" style="margin-bottom: 15px; width:100%; text-align: center;">
+            <input type="text" id="class-name" placeholder="Class (e.g., 10A1)" style="margin-bottom: 25px; width:100%; text-align: center;">
+            <button class="btn btn-primary" onclick="App.login()" style="width: 100%; justify-content: center; font-size: 1.2rem; padding: 15px;">Start Lesson</button>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <div>
+            <h1>FRIENDS GLOBAL 10</h1>
+            <div class="header-subtitle" id="user-info">Guest | Class</div>
+        </div>
+        <div class="score-board">
+            <span>🏆</span> <span id="total-points">0 PTS</span>
+        </div>
+    </header>
+
+    <div class="nav-container">
+        <button class="tab-btn active" onclick="App.nav('reading')">Lead-in & Reading</button>
+        <button class="tab-btn" onclick="App.nav('grammar1')">Grammar: Future</button>
+        <button class="tab-btn" onclick="App.nav('grammar2')">Grammar: Present Perfect</button>
+        <button class="tab-btn" onclick="App.nav('grammar-builder')">Grammar Builder</button>
+        <button class="tab-btn" onclick="App.nav('speaking')">Writing & Speaking</button>
+        <button class="tab-btn" onclick="App.nav('tuggame')">Tug Game Quiz</button>
+        <button class="tab-btn" onclick="App.nav('wrapup')">Wrap-up</button>
+        <button class="tab-btn" onclick="App.nav('class-results'); fetchLeaderboard()">Class Results</button>
+    </div>
+
+    <main>
+        <!-- TAB 1: READING & LEAD-IN -->
+        <div id="reading" class="tab-panel active">
+            <div class="card alt-bg" id="survey-container">
+                <h2><i data-lucide="bar-chart-2"></i> Live Survey: Gadgets & Tech</h2>
+                <p class="info-box">Teacher: Click the buttons to add student votes. Discuss the results!</p>
+                <div class="survey-grid">
+                    <div class="survey-box">
+                        <h4>1. Do you think wearable gadgets will soon replace smartphones?</h4>
+                        <div class="btn-group" style="justify-content: center; margin-top:0;" id="survey-q1-btns">
+                            <button class="btn btn-primary" onclick="Survey.addVote('q1', 0, this)">Yes</button>
+                            <button class="btn btn-primary" onclick="Survey.addVote('q1', 1, this)">No</button>
+                        </div>
+                    </div>
+                    <div class="survey-box">
+                        <h4>2. Have your photos ever been shared without your permission?</h4>
+                        <div class="btn-group" style="justify-content: center; margin-top:0;" id="survey-q2-btns">
+                            <button class="btn btn-primary" onclick="Survey.addVote('q2', 0, this)">Yes</button>
+                            <button class="btn btn-primary" onclick="Survey.addVote('q2', 1, this)">No</button>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 25px;" id="survey-submit-wrapper">
+                    <button class="btn btn-primary" onclick="App.submitTask('survey', this, 'survey-container')"><i data-lucide="send"></i> Submit Survey</button>
+                </div>
+            </div>
+
+            <div class="card" id="reading-container">
+                <h2><i data-lucide="book-open"></i> Ex 1 & 2: The Camera Revolution</h2>
+                <p style="margin-bottom: 20px; font-weight: 600;">Look at the text below. What things do you think a wearable gadget can do? <strong>Click on the words</strong> in the text to identify the passive voice structures:</p>
+                
+                <div style="display: flex; gap: 15px; margin-bottom: 15px; font-weight: bold; font-size: 0.95rem; flex-wrap: wrap;">
+                    <span style="background: rgba(0, 206, 201, 0.3); padding: 5px 10px; border-radius: 5px; color: #00b894; border: 1px solid rgba(0, 206, 201, 0.5);">1 Click: Present Perfect Passive</span>
+                    <span style="background: rgba(253, 121, 168, 0.3); padding: 5px 10px; border-radius: 5px; color: #d63031; border: 1px solid rgba(253, 121, 168, 0.5);">2 Clicks: Modal Passive</span>
+                    <span style="background: rgba(9, 132, 227, 0.3); padding: 5px 10px; border-radius: 5px; color: #0984e3; border: 1px solid rgba(9, 132, 227, 0.5);">3 Clicks: Future Passive</span>
+                </div>
+
+                <div id="interactive-reading" style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #dfe6e9; font-size: 1.15rem; line-height: 2; box-shadow: inset 0 2px 10px rgba(0,0,0,0.02); cursor: default;">
+                    <!-- Content generated dynamically by JS -->
+                </div>
+
+                <div class="btn-group" style="margin-top: 15px;" id="reading-btn-group">
+                    <button class="btn btn-check" onclick="ReadingApp.checkAnswers(this)"><i data-lucide="check-circle"></i> Check Answers</button>
+                    <button class="btn btn-primary" onclick="ReadingApp.submitTask(this)"><i data-lucide="send"></i> Submit Task</button>
+                    <button class="btn btn-reset" onclick="ReadingApp.reset(this)"><i data-lucide="rotate-ccw"></i> Reset</button>
+                </div>
+
+                <div style="margin-top: 25px;">
+                    <button class="btn btn-reset" onclick="const box = document.getElementById('key-ideas-box'); box.style.display = box.style.display === 'none' ? 'block' : 'none';"><i data-lucide="key"></i> Teacher: Toggle Key Ideas</button>
+                </div>
+                <div id="key-ideas-box" class="info-box" style="display: none; border-left-color: #00b894; background: rgba(0, 184, 148, 0.05); margin-top: 15px;">
+                    <strong style="color: #00b894; font-size: 1.1rem;"><i data-lucide="key"></i> KEY IDEAS:</strong><br><br>
+                    The gadget allows people to take a photo simply by blinking. You can also send messages and surf the internet.
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: GRAMMAR 1 -->
+        <div id="grammar1" class="tab-panel">
+            <div class="card alt-bg">
+                <h2><i data-lucide="zap"></i> LEARN THIS! The Passive</h2>
+                <div class="grammar-box">
+                    <h3 class="toggle-theory" onclick="toggleTheory(this)">A. Present Perfect Passive <span class="icon-wrapper"><i data-lucide="plus"></i></span></h3>
+                    <div class="theory-content" style="display: none;">
+                        <p style="margin-bottom: 10px;">Structure: <strong>has / have + been + past participle (V3/ed)</strong></p>
+                        <ul style="margin-left: 25px; margin-bottom: 15px; line-height: 1.6;">
+                            <li>(+) Billions of photos <strong>have been uploaded</strong>.</li>
+                            <li>(-) The technology <strong>hasn't been perfected</strong>.</li>
+                            <li>(?) <strong>Have</strong> traditional cameras <strong>been replaced</strong>?</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="grammar-box">
+                    <h3 class="toggle-theory" onclick="toggleTheory(this)">B. Future Passive & Modals <span class="icon-wrapper"><i data-lucide="plus"></i></span></h3>
+                    <div class="theory-content" style="display: none;">
+                        <p style="margin-bottom: 10px;">Structure: <strong>will / can / may + be + past participle (V3/ed)</strong></p>
+                        <ul style="margin-left: 25px; margin-bottom: 15px; line-height: 1.6;">
+                            <li>(+) Our lives <strong>will be changed</strong> by these devices.</li>
+                            <li>(-) These devices <strong>won't be sold</strong> in shops for a while.</li>
+                            <li>(?) <strong>Will</strong> cameras <strong>be replaced</strong>?</li>
+                            <li>(Modals) Messages <strong>can be sent</strong>. They <strong>may be taken over</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2><i data-lucide="link"></i> Ex 3: Match the tenses</h2>
+                <p style="margin-bottom: 15px; font-weight: 600;">Match the underlined passive forms from the text with the tenses below (a–h). Type the letter in the box.</p>
+                
+                <div style="display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start;">
+                    <!-- Left Side: Tenses -->
+                    <div style="flex: 1; min-width: 250px; background: #f8f9fa; padding: 20px; border-radius: 12px; border: 1px solid #dfe6e9; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+                        <h4 style="margin-bottom: 15px; color: var(--primary); font-family: var(--font-head);"><i data-lucide="list"></i> Tenses</h4>
+                        <ul style="list-style: none; display: flex; flex-direction: column; gap: 12px; font-weight: 500; color: var(--dark);">
+                            <li><strong>a.</strong> present perfect affirmative</li>
+                            <li><strong>b.</strong> present perfect negative</li>
+                            <li><strong>c.</strong> present perfect interrogative</li>
+                            <li><strong>d.</strong> will future affirmative</li>
+                            <li><strong>e.</strong> will future interrogative</li>
+                            <li><strong>f.</strong> will future negative</li>
+                            <li><strong>g.</strong> modal verb can/may affirmative</li>
+                            <li><strong>h.</strong> modal verb can negative</li>
+                        </ul>
+                    </div>
+
+                    <!-- Right Side: Sentences -->
+                    <div style="flex: 2; min-width: 300px;">
+                        <form id="ex3-form"></form>
+                        <div class="btn-group">
+                            <button class="btn btn-check" onclick="App.checkForm('ex3-form', this)"><i data-lucide="check-circle"></i> Check Answers</button>
+                            <button class="btn btn-primary" onclick="App.submitFormTask('ex3', 'ex3-form', this)"><i data-lucide="send"></i> Submit Task</button>
+                            <button class="btn btn-reset" onclick="App.resetForm('ex3-form', this)"><i data-lucide="rotate-ccw"></i> Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2><i data-lucide="edit-3"></i> Ex 4: Future Predictions</h2>
+                <p style="margin-bottom: 15px; font-weight: 600;">Complete the predictions about one hundred years from now with the affirmative <strong>future passive</strong> form of the verbs in brackets.</p>
+                <form id="ex4-form"></form>
+                <div class="btn-group">
+                    <button class="btn btn-check" onclick="App.checkForm('ex4-form', this)"><i data-lucide="check-circle"></i> Check Answers</button>
+                    <button class="btn btn-primary" onclick="App.submitFormTask('ex4', 'ex4-form', this)"><i data-lucide="send"></i> Submit Task</button>
+                    <button class="btn btn-reset" onclick="App.resetForm('ex4-form', this)"><i data-lucide="rotate-ccw"></i> Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: GRAMMAR 2 -->
+        <div id="grammar2" class="tab-panel">
+            <div class="card">
+                <h2><i data-lucide="pen-tool"></i> Ex 6: Present Perfect Passive</h2>
+                <p style="margin-bottom: 15px; font-weight: 600;">Complete the sentences about what has happened in the past hour. Use the <strong>present perfect passive</strong> of the verbs in brackets.</p>
+                <form id="ex6-form"></form>
+                <div class="btn-group">
+                    <button class="btn btn-check" onclick="App.checkForm('ex6-form', this)"><i data-lucide="check-circle"></i> Check Answers</button>
+                    <button class="btn btn-primary" onclick="App.submitFormTask('ex6', 'ex6-form', this)"><i data-lucide="send"></i> Submit Task</button>
+                    <button class="btn btn-reset" onclick="App.resetForm('ex6-form', this)"><i data-lucide="rotate-ccw"></i> Reset</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2><i data-lucide="message-square"></i> Ex 7: Have you ever...?</h2>
+                <p style="margin-bottom: 15px; font-weight: 600;">Write questions using the <strong>present perfect passive with 'ever'</strong> based on the prompts.</p>
+                <form id="ex7-form"></form>
+                <div class="btn-group">
+                    <button class="btn btn-check" onclick="App.checkForm('ex7-form', this)"><i data-lucide="check-circle"></i> Check Answers</button>
+                    <button class="btn btn-primary" onclick="App.submitFormTask('ex7', 'ex7-form', this)"><i data-lucide="send"></i> Submit Task</button>
+                    <button class="btn btn-reset" onclick="App.resetForm('ex7-form', this)"><i data-lucide="rotate-ccw"></i> Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW TAB: GRAMMAR BUILDER -->
+        <div id="grammar-builder" class="tab-panel">
+            <div class="card">
+                <h2><i data-lucide="tool"></i> Ex 5: Present Perfect Passive</h2>
+                <p style="margin-bottom: 15px; font-weight: 600;">Complete the sentences. Use the correct affirmative, negative, or interrogative form of the present perfect passive.</p>
+                <form id="ex5-builder-form">
+                    <div class="question-row"><div class="question-col"><span>1. My watch <strong>has been stolen</strong> (steal). <em>(Example)</em></span></div></div>
+                    <div class="question-row"><div class="question-col"><span>2. These socks <input type="text" class="gap-input" data-ans="haven't been washed|have not been washed" data-exp="Use hasn't/haven't + been + past participle. 'Socks' is plural, so use 'haven't'." placeholder="..."> (not wash).</span></div></div>
+                    <div class="question-row"><div class="question-col"><span>3. <input type="text" class="gap-input small-input" data-ans="Has" data-exp="Question starts with Has/Have. 'Ticket' is singular, so use 'Has'." placeholder="..."> your ticket <input type="text" class="gap-input" data-ans="been checked" data-exp="Question form requires 'been + past participle'." placeholder="..."> (check)?</span></div></div>
+                    <div class="question-row"><div class="question-col"><span>4. A new road <input type="text" class="gap-input" data-ans="has been built" data-exp="'Road' is singular, use 'has been built'." placeholder="..."> (build) between Kingsbridge and Abbotsville.</span></div></div>
+                    <div class="question-row"><div class="question-col"><span>5. The latest Avengers film <input type="text" class="gap-input" data-ans="hasn't been shown|has not been shown" data-exp="Negative singular, use 'hasn't been shown'." placeholder="..."> (not show) in our local cinema yet.</span></div></div>
+                    <div class="question-row"><div class="question-col"><span>6. <input type="text" class="gap-input small-input" data-ans="Has" data-exp="'Parcel' is singular, start with 'Has'." placeholder="..."> your parcel <input type="text" class="gap-input" data-ans="been delivered" data-exp="Question form requires 'been + past participle'." placeholder="..."> (deliver) yet?</span></div></div>
+                    <div class="question-row"><div class="question-col"><span>7. They're going to cancel the concert because not enough tickets <input type="text" class="gap-input" data-ans="have been sold" data-exp="'Tickets' is plural, use 'have been sold'." placeholder="..."> (sell).</span></div></div>
+                    <div class="question-row"><div class="question-col"><span>8. How many people <input type="text" class="gap-input" data-ans="have been invited" data-exp="'People' is a plural noun, so use 'have been invited'." placeholder="..."> (invite) to Emily's party?</span></div></div>
+                    <div class="question-row"><div class="question-col"><span>9. My homework <input type="text" class="gap-input" data-ans="hasn't been marked|has not been marked" data-exp="'Homework' is an uncountable noun (singular), use 'hasn't been marked'." placeholder="..."> (not mark) by the teacher.</span></div></div>
+                </form>
+                <div class="btn-group">
+                    <button class="btn btn-check" onclick="App.checkForm('ex5-builder-form', this)"><i data-lucide="check-circle"></i> Check Answers</button>
+                    <button class="btn btn-primary" onclick="App.submitFormTask('ex5b', 'ex5-builder-form', this)"><i data-lucide="send"></i> Submit Task</button>
+                    <button class="btn btn-reset" onclick="App.resetForm('ex5-builder-form', this)"><i data-lucide="rotate-ccw"></i> Reset</button>
+                </div>
+            </div>
+
+            <div class="card alt-bg">
+                <h2><i data-lucide="cloud"></i> Ex 6: SuperCloud Ad (Future Passive)</h2>
+                <p style="margin-bottom: 15px; font-weight: 600;">Complete the advertisement. Use the future passive form (will) of the verbs in brackets.</p>
+                <form id="ex6-builder-form">
+                    <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #dfe6e9; font-size: 1.1rem; line-height: 2;">
+                        <h3 style="color: var(--primary); text-align: center; margin-bottom: 15px; font-family: var(--font-head); font-size: 1.8rem;">SuperCloud <i data-lucide="cloud" style="display:inline-block; vertical-align:middle;"></i></h3>
+                        <p style="text-align: center; font-weight: bold; margin-bottom: 15px; color: var(--success);">FREE cloud storage for your computer data!</p>
+                        <p>It's so easy! Simply select the files you want to store and they ¹ <input type="text" class="gap-input" data-ans="will be uploaded" data-exp="Structure: will + be + V3 -> will be uploaded." placeholder="..."> (upload) to SuperCloud.</p>
+                        <p>They ² <input type="text" class="gap-input" data-ans="will be scanned" data-exp="Structure: will + be + V3 -> will be scanned." placeholder="..."> (scan) for viruses and then ³ <input type="text" class="gap-input" data-ans="will be stored" data-exp="Structure: will + be + V3 -> will be stored." placeholder="..."> (store) on our servers.</p>
+                        <p>Your files and photos ⁴ <input type="text" class="gap-input" data-ans="will be backed up" data-exp="Structure: will + be + V3 -> will be backed up." placeholder="..."> (back up) automatically, so they ⁵ <input type="text" class="gap-input" data-ans="won't be lost|will not be lost" data-exp="Negative form: won't + be + V3." placeholder="..."> (not lose).</p>
+                        <p>Remember, you ⁶ <input type="text" class="gap-input" data-ans="won't be charged|will not be charged" data-exp="Negative form: won't + be + V3." placeholder="..."> (not charge) for the SuperCloud service. It's FREE!</p>
+                        <p>Click here to sign up. Once you sign up, an email ⁷ <input type="text" class="gap-input" data-ans="will be sent" data-exp="Structure: will + be + V3 -> will be sent." placeholder="..."> (send) to you with full instructions.</p>
+                        <p style="text-align: center; font-weight: 900; margin-top: 15px; color: var(--secondary); font-size: 1.2rem;">What are you waiting for?!</p>
+                    </div>
+                </form>
+                <div class="btn-group">
+                    <button class="btn btn-check" onclick="App.checkForm('ex6-builder-form', this)"><i data-lucide="check-circle"></i> Check Answers</button>
+                    <button class="btn btn-primary" onclick="App.submitFormTask('ex6b', 'ex6-builder-form', this)"><i data-lucide="send"></i> Submit Task</button>
+                    <button class="btn btn-reset" onclick="App.resetForm('ex6-builder-form', this)"><i data-lucide="rotate-ccw"></i> Reset</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2><i data-lucide="repeat"></i> Ex 7: Rewrite the sentences</h2>
+                <p style="margin-bottom: 15px; font-weight: 600;">Rewrite the sentences. Use the present perfect passive, future passive or passive with modal verbs. Use <em>by</em> where necessary.</p>
+                <form id="ex7-builder-form">
+                    <div class="question-row"><div class="question-col"><span>1. Robots will build the cars in the new factory.</span><span style="color: var(--success); font-weight:bold;">The cars will be built by robots in the new factory.</span></div></div>
+                    <div class="question-row"><div class="question-col"><span>2. We probably won't need desktop computers ten years from now.</span> <input type="text" data-ans="Desktop computers probably won't be needed ten years from now.|Desktop computers will probably not be needed ten years from now." data-exp="The object 'desktop computers' becomes the subject. Use 'won't be needed'." placeholder="Rewrite here..."></div></div>
+                    <div class="question-row"><div class="question-col"><span>3. Digital cameras have replaced celluloid film cameras.</span> <input type="text" data-ans="Celluloid film cameras have been replaced by digital cameras." data-exp="The object 'celluloid film cameras' becomes the subject. 'have replaced' -> 'have been replaced by'." placeholder="Rewrite here..."></div></div>
+                    <div class="question-row"><div class="question-col"><span>4. Robots can help passengers with the check-in at the airports now.</span> <input type="text" data-ans="Passengers can be helped by robots with the check-in at the airports now." data-exp="The object 'passengers' becomes the subject. 'can help' -> 'can be helped by'." placeholder="Rewrite here..."></div></div>
+                    <div class="question-row"><div class="question-col"><span>5. Using this electronic dictionary may enrich your vocabulary.</span> <input type="text" data-ans="Your vocabulary may be enriched by using this electronic dictionary." data-exp="The object 'your vocabulary' becomes the subject. 'may enrich' -> 'may be enriched by'." placeholder="Rewrite here..."></div></div>
+                    <div class="question-row"><div class="question-col"><span>6. They haven't invented computers that can think like humans.</span> <input type="text" data-ans="Computers that can think like humans haven't been invented.|Computers that can think like humans have not been invented." data-exp="The object 'computers that can think like humans' becomes the subject. 'haven't invented' -> 'haven't been invented'." placeholder="Rewrite here..."></div></div>
+                </form>
+                <div class="btn-group">
+                    <button class="btn btn-check" onclick="App.checkForm('ex7-builder-form', this)"><i data-lucide="check-circle"></i> Check Answers</button>
+                    <button class="btn btn-primary" onclick="App.submitFormTask('ex7b', 'ex7-builder-form', this)"><i data-lucide="send"></i> Submit Task</button>
+                    <button class="btn btn-reset" onclick="App.resetForm('ex7-builder-form', this)"><i data-lucide="rotate-ccw"></i> Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: WRITING & SPEAKING -->
+        <div id="speaking" class="tab-panel">
+            <div class="card">
+                <h2><i data-lucide="edit-3"></i> Writing Practice: Predictions</h2>
+                <p class="info-box">Do you agree or disagree with the predictions from Ex 4? Write your answers using phrases like <em>"I agree that..."</em>, <em>"I don't agree that..."</em>. You have 5 minutes! <strong>The timer starts automatically when you type!</strong></p>
+                
+                <div style="margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; background: #f8f9fa; padding: 15px; border-radius: 10px; border: 1px solid #dfe6e9; flex-wrap: wrap; gap: 10px;">
+                    <span style="font-weight: bold; font-size: 1.1rem; color: var(--dark); display: flex; align-items: center; gap: 8px;"><i data-lucide="clock"></i> Timer: <span id="write-timer-display" style="color: var(--danger); font-family: monospace; font-size: 1.5rem;">05:00</span></span>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="btn btn-show" onclick="WritingApp.rollDice()"><i data-lucide="dices"></i> Random Set</button>
+                        <button class="btn btn-primary" id="start-write-timer-btn" onclick="WritingApp.startTimer()"><i data-lucide="play"></i> Start Timer Manually</button>
+                    </div>
+                </div>
+
+                <div style="background: white; border: 2px solid #E2E8F0; border-radius: 12px; padding: 25px;">
+                    <h3 id="writing-set-title" style="color: var(--primary); margin-bottom: 20px; font-family: var(--font-head); font-size: 1.4rem;">Set 1</h3>
+                    
+                    <div id="writing-questions-container">
+                        <!-- Questions injected dynamically -->
+                    </div>
+
+                    <button id="submit-writing-btn" class="btn btn-primary" style="width: 100%; padding: 15px; font-size: 1.1rem; margin-top: 15px;" onclick="WritingApp.submitAnswers(this)"><i data-lucide="send"></i> Submit Writing Task</button>
+                </div>
+            </div>
+
+            <div class="card alt-bg">
+                <h2><i data-lucide="mic"></i> Speaking Challenge: Invent a Gadget</h2>
+                <p style="margin-bottom: 15px; font-weight: 500;">Invent a wearable gadget based on the prompt! Describe its functions using passive sentences with <strong>can</strong> and <strong>may</strong>. A new idea appears every 30 seconds!</p>
+                
+                <div style="background: rgba(9, 132, 227, 0.05); border: 2px dashed var(--primary); border-radius: 12px; padding: 20px; margin-bottom: 25px;">
+                    <h4 style="color: var(--primary); margin-bottom: 10px; font-family: var(--font-head);">Speaking Checklist</h4>
+                    <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; font-weight: 500;">
+                        <label style="cursor: pointer; display: flex; align-items: center; gap: 8px;"><input type="checkbox" style="width: 18px; height: 18px;"> Did I use the passive voice?</label>
+                        <label style="cursor: pointer; display: flex; align-items: center; gap: 8px;"><input type="checkbox" style="width: 18px; height: 18px;"> Did I use modals (can/may)?</label>
+                        <label style="cursor: pointer; display: flex; align-items: center; gap: 8px;"><input type="checkbox" style="width: 18px; height: 18px;"> Did I explain the gadget's functions clearly?</label>
+                    </div>
+                    <h4 style="color: var(--dark); margin-bottom: 10px; font-family: var(--font-head);">Model Answer</h4>
+                    <p style="font-style: italic; color: #2d3436; line-height: 1.6; background: white; padding: 15px; border-radius: 8px; border-left: 4px solid var(--secondary);">"I have invented a Smart Translation Earpiece. It <strong>can be worn</strong> in your ear. When someone speaks a foreign language, the words <strong>are translated</strong> instantly. Messages <strong>can also be recorded</strong> and played back later. It <strong>may be used</strong> by travelers and business people."</p>
+                </div>
+
+                <div style="margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; background: #f8f9fa; padding: 15px; border-radius: 10px; border: 1px solid #dfe6e9; flex-wrap: wrap; gap: 10px;">
+                    <span style="font-weight: bold; font-size: 1.1rem; color: var(--dark); display: flex; align-items: center; gap: 8px;"><i data-lucide="clock"></i> Prep Timer: <span id="prep-timer-display" style="color: var(--primary); font-family: monospace; font-size: 1.5rem;">05:00</span></span>
+                    <button class="btn btn-primary" id="start-prep-btn" onclick="SpeakingPrep.startTimer()"><i data-lucide="play"></i> Start Prep</button>
+                </div>
+
+                <div style="background: white; border: 2px solid #E2E8F0; border-radius: 12px; padding: 30px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 25px;">
+                    <div id="random-cue-text" style="font-size: 1.3rem; font-weight: 700; color: var(--primary); min-height: 80px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; transition: opacity 0.3s ease;">
+                        Click "Start Challenge" to begin!
+                    </div>
+                </div>
+                
+                <!-- Live Recording & Speaking Challenge Controls -->
+                <div style="text-align: center; border-top: 2px dashed #b2bec3; padding-top: 2rem;">
+                    <h3 style="color: var(--primary); margin-bottom: 1.5rem; font-size: 1.5rem; font-family: var(--font-head);">Challenge Timer & Recorder</h3>
+                    <div style="margin: 0 auto 1.5rem; max-width: 380px; background: white; padding: 20px; border-radius: 15px; box-shadow: var(--shadow);">
+                        <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap;">
+                            <button class="btn btn-primary" id="start-challenge-btn" onclick="SpeakingChallenge.start()"><i data-lucide="play"></i> Start Challenge</button>
+                            <button class="btn btn-reset" onclick="SpeakingChallenge.reset()"><i data-lucide="rotate-ccw"></i> Reset</button>
+                        </div>
+                        <div id="challenge-timer-display" style="font-size: 2.8rem; font-weight: 900; color: var(--primary); font-family: monospace;">02:00</div>
+                    </div>
+                    
+                    <div style="padding: 2rem; border: 3px solid var(--primary); border-radius: 20px; background: rgba(255,255,255,0.8);">
+                        <button id="record-btn" class="btn btn-check" style="font-size: 1.2rem; padding: 15px 30px;" onclick="SpeechApp.toggleRecording()"><i data-lucide="mic"></i> Start Recording</button>
+                        <p id="speech-result" style="margin-top: 1.5rem; font-size: 1.2rem; font-style: italic; color: #2d3436; min-height: 3rem; font-weight: 500;">Press start to speak...</p>
+                        <button class="btn btn-primary" id="submit-speaking-btn" style="margin-top: 15px;" onclick="SpeechApp.submitSpeakingTask(this)"><i data-lucide="send"></i> Submit Speaking Task</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: TUG GAME -->
+        <div id="tuggame" class="tab-panel">
+            <div class="card" style="padding: 20px;">
+                <h2><i data-lucide="swords"></i> Tug-of-War: The Passive Quiz</h2>
+                <div class="info-box">
+                    <strong>Instructions:</strong> Answer correctly to earn points and pull the rope toward your team. Each correct answer adds 10 points to your total score! If you answer incorrectly or run out of time, the rope moves to the computer opponent.
+                </div>
+                
+                <div id="team-selection" style="text-align: center; padding: 40px 20px; background: #f8f9fa; border-radius: 15px; border: 2px dashed #dfe6e9; margin-top: 20px;">
+                    <h3 style="margin-bottom: 20px; color: var(--dark); font-family: var(--font-head);">Choose your team to start the quiz!</h3>
+                    <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                        <button class="btn" style="background: var(--team-red); color: white; font-size: 1.2rem; padding: 15px 30px;" onclick="Game.selectTeam('red')"><i data-lucide="flag"></i> Play for RED Team</button>
+                        <button class="btn" style="background: var(--team-blue); color: white; font-size: 1.2rem; padding: 15px 30px;" onclick="Game.selectTeam('blue')"><i data-lucide="flag"></i> Play for BLUE Team</button>
+                    </div>
+                </div>
+
+                <div class="game-grid" id="tug-game-board" style="display: none;">
+                    <!-- RED TEAM (LEFT) -->
+                    <div class="team-game-column team-red-column">
+                        <div class="team-header">
+                            <div class="team-title" style="color: var(--team-red);">RED TEAM</div>
+                            <div class="team-score-badge" id="red-game-score">0</div>
+                        </div>
+                        <div style="display: flex; justify-content: center; margin-bottom: 10px;">
+                            <div class="timer-circle" id="red-timer">15</div>
+                        </div>
+                        <div id="red-remaining" style="text-align: center; font-size: 1rem; color: #636e72; font-weight: 700; margin-bottom: 15px;">Questions left: 20</div>
+                        <div class="quiz-box" id="red-quiz-box">
+                            <div class="question-text" id="red-question">Question Loading...</div>
+                            <div id="red-options"></div>
+                        </div>
+                    </div>
+
+                    <!-- CENTER VISUAL STAGE & CONTROLS -->
+                    <div class="center-stage-container">
+                        <div class="tug-visual-stage">
+                            <div class="stage-center-line"></div>
+                            
+                            <!-- Tug Image -->
+                            <div id="tug-image-wrapper" class="tug-image-wrapper">
+                                <!-- FLIPPED IMAGE -->
+                                <img src="https://i.postimg.cc/L6cbmjJn/Gemini-Generated-Image-xcqrfexcqrfexcqr.png" alt="Tug of war players" style="transform: scaleX(-1);">
+                            </div>
+
+                            <!-- Game Over Overlay -->
+                            <div id="tug-over-overlay" class="game-overlay-panel" style="display: none;">
+                                <h1 id="win-message" style="font-size: 2.8rem; margin-bottom: 15px; font-family: var(--font-head); font-weight: 900; text-shadow: 2px 2px 5px rgba(0,0,0,0.5);">TEAM WINS!</h1>
+                                <button class="btn btn-primary" onclick="Game.reset()" style="font-size: 1.2rem; padding: 12px 30px; margin-bottom: 10px;">PLAY AGAIN</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Game Status & Controls -->
+                        <div id="tug-controls" style="display: none; justify-content: center; gap: 12px; padding: 10px;">
+                            <button class="btn btn-check" onclick="Game.start()"><i data-lucide="play"></i> Start</button>
+                            <button class="btn btn-show" onclick="Game.pause()"><i data-lucide="pause"></i> Pause</button>
+                            <button class="btn btn-primary" onclick="Game.submitTugTask(this)"><i data-lucide="send"></i> Submit Score</button>
+                            <button class="btn btn-reset" onclick="Game.reset()"><i data-lucide="rotate-ccw"></i> Reset</button>
+                        </div>
+                    </div>
+
+                    <!-- BLUE TEAM (RIGHT) -->
+                    <div class="team-game-column team-blue-column">
+                        <div class="team-header">
+                            <div class="team-title" style="color: var(--team-blue);">BLUE TEAM</div>
+                            <div class="team-score-badge" id="blue-game-score">0</div>
+                        </div>
+                        <div style="display: flex; justify-content: center; margin-bottom: 10px;">
+                            <div class="timer-circle" id="blue-timer">15</div>
+                        </div>
+                        <div id="blue-remaining" style="text-align: center; font-size: 1rem; color: #636e72; font-weight: 700; margin-bottom: 15px;">Questions left: 20</div>
+                        <div class="quiz-box" id="blue-quiz-box">
+                            <div class="question-text" id="blue-question">Question Loading...</div>
+                            <div id="blue-options"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 6: WRAP-UP & SUBMISSION -->
+        <div id="wrapup" class="tab-panel">
+            <div class="card alt-bg">
+                <h2><i data-lucide="check-circle"></i> Lesson Wrap-up & Submission</h2>
+                <p class="info-box">Check off the objectives you've successfully completed in today's lesson, then submit your work!</p>
+                
+                <div style="margin: 25px 0;">
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox-circle"></div>
+                        <span>I can identify <strong>passive voice</strong> structures in texts.</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox-circle"></div>
+                        <span>I can make predictions using the <strong>future passive</strong> (will be done).</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox-circle"></div>
+                        <span>I can talk about recent actions using the <strong>present perfect passive</strong>.</span>
+                    </div>
+                    <div class="checklist-item" onclick="toggleCheck(this)">
+                        <div class="checkbox-circle"></div>
+                        <span>I can describe gadget features using <strong>modals in the passive</strong> (can/may be used).</span>
+                    </div>
+                </div>
+
+                <div style="background: white; border-left: 6px solid var(--accent); padding: 20px; border-radius: 10px; margin-top: 30px; box-shadow: var(--shadow);">
+                    <h3 style="color: var(--dark); font-family: var(--font-head); margin-bottom: 10px;"><i data-lucide="home"></i> Homework Assignment</h3>
+                    <p style="font-size: 1.1rem; font-weight: 500;">Learn by heart all new vocabulary, phrases, and structures. Write a short paragraph (50 words) predicting the future of smartphones using the passive voice.</p>
+                </div>
+
+                <!-- ADDED SUBMISSION BUTTON WITH MISSING TASKS WARNING -->
+                <div style="margin-top: 40px; text-align: center; border-top: 2px dashed #dfe6e9; padding-top: 30px;">
+                    <h3 style="margin-bottom: 5px; color: var(--primary); font-family: var(--font-head);">Ready to Turn In Your Assignment?</h3>
+                    <p style="color: var(--danger); font-weight: bold; margin-bottom: 20px; font-size: 1.1rem;"><i data-lucide="clock" style="vertical-align: middle;"></i> Deadline: 31 May 2026</p>
+                    
+                    <div id="missing-tasks-warning" style="text-align: left; max-width: 500px; margin: 0 auto 20px; display: none; padding: 20px; border-radius: 12px; border-left: 5px solid;"></div>
+
+                    <button id="final-submit-btn" class="btn btn-primary" style="padding: 20px 40px; font-size: 1.2rem; width: 100%; max-width: 500px; box-shadow: 0 10px 20px rgba(9, 132, 227, 0.3);" onclick="App.submitFinalWork()">
+                        <i data-lucide="send"></i> SUBMIT ALL WORK TO MS. VY
+                    </button>
+                    
+                    <!-- ENHANCED WARNING TEXT -->
+                    <div style="margin-top: 20px; color: var(--danger); font-size: 1.3rem; font-weight: 900; text-transform: uppercase; text-align: center; border: 2px solid var(--danger); padding: 15px; border-radius: 8px; background: rgba(214, 48, 49, 0.1);">
+                        <i data-lucide="alert-circle" style="vertical-align: text-bottom;"></i> WARNING: THIS WILL PERMANENTLY FREEZE ALL YOUR ANSWERS.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- TAB 7: CLASS RESULTS -->
+        <div id="class-results" class="tab-panel">
+            <div class="card">
+                <h2><i data-lucide="trophy"></i> Live Class Leaderboard: <span id="lb-class-display" style="color: var(--accent);">Your Class</span></h2>
+                <div class="info-box">
+                    <strong>Real-time Results:</strong> See how you compare to your classmates! Hit refresh to pull the latest top scores.
+                </div>
+                
+                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px;">
+                    <div style="flex: 1; background: var(--primary); color: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: var(--shadow);">
+                        <h3 style="font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9;">Total Submissions</h3>
+                        <div id="total-submissions" style="font-size: 3rem; font-weight: 900; font-family: var(--font-head);">0</div>
+                    </div>
+                    <div style="flex: 2; background: white; border: 2px solid #dfe6e9; border-radius: 12px; padding: 20px; display: flex; align-items: center; justify-content: center;">
+                        <button class="btn btn-primary" onclick="fetchLeaderboard()"><i data-lucide="refresh-cw"></i> Refresh Leaderboard</button>
+                    </div>
+                </div>
+
+                <div style="overflow-x: auto; background: white; border-radius: 12px; border: 1px solid #dfe6e9; margin-bottom: 25px;">
+                    <table class="leaderboard-table" id="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Student Name</th>
+                                <th>Class</th>
+                                <th>Total Score</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard-body">
+                            <tr>
+                                <td colspan="4" style="text-align: center; padding: 30px; color: #636e72;">
+                                    Click the Refresh button above to load live scores...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="card alt-bg">
+                <h2><i data-lucide="pie-chart"></i> Live Class Survey Results</h2>
+                <div class="survey-grid">
+                    <div class="survey-box">
+                        <h4 style="font-size: 0.95rem;">1. Wearable gadgets will replace smartphones?</h4>
+                        <div class="survey-chart-container"><canvas id="class-chart-q1"></canvas></div>
+                    </div>
+                    <div class="survey-box">
+                        <h4 style="font-size: 0.95rem;">2. Photos shared without permission?</h4>
+                        <div class="survey-chart-container"><canvas id="class-chart-q2"></canvas></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- KEYBOARD -->
+    <button id="toggle-kb-btn" class="btn btn-primary" style="position: fixed; bottom: 20px; right: 20px; z-index: 1500; box-shadow: var(--shadow); border-radius: 50%; width: 60px; height: 60px; padding: 0; display: flex; align-items: center; justify-content: center;" onclick="toggleKeyboard()" title="Toggle Virtual Keyboard">
+        <i data-lucide="keyboard" style="margin: 0;"></i>
+    </button>
+    <div id="virtual-keyboard">
+        <button class="kb-close" onclick="closeKeyboard()">Close Keyboard ▼</button>
+        <div class="kb-row">
+            <button class="kb-key" onclick="kp('1')">1</button><button class="kb-key" onclick="kp('2')">2</button>
+            <button class="kb-key" onclick="kp('3')">3</button><button class="kb-key" onclick="kp('4')">4</button>
+            <button class="kb-key" onclick="kp('5')">5</button><button class="kb-key" onclick="kp('6')">6</button>
+            <button class="kb-key" onclick="kp('7')">7</button><button class="kb-key" onclick="kp('8')">8</button>
+            <button class="kb-key" onclick="kp('9')">9</button><button class="kb-key" onclick="kp('0')">0</button>
+        </div>
+        <div class="kb-row">
+            <button class="kb-key" onclick="kp('q')">q</button><button class="kb-key" onclick="kp('w')">w</button>
+            <button class="kb-key" onclick="kp('e')">e</button><button class="kb-key" onclick="kp('r')">r</button>
+            <button class="kb-key" onclick="kp('t')">t</button><button class="kb-key" onclick="kp('y')">y</button>
+            <button class="kb-key" onclick="kp('u')">u</button><button class="kb-key" onclick="kp('i')">i</button>
+            <button class="kb-key" onclick="kp('o')">o</button><button class="kb-key" onclick="kp('p')">p</button>
+            <button class="kb-key" onclick="kp('-')">-</button>
+        </div>
+        <div class="kb-row">
+            <button class="kb-key" onclick="kp('a')">a</button><button class="kb-key" onclick="kp('s')">s</button>
+            <button class="kb-key" onclick="kp('d')">d</button><button class="kb-key" onclick="kp('f')">f</button>
+            <button class="kb-key" onclick="kp('g')">g</button><button class="kb-key" onclick="kp('h')">h</button>
+            <button class="kb-key" onclick="kp('j')">j</button><button class="kb-key" onclick="kp('k')">k</button>
+            <button class="kb-key" onclick="kp('l')">l</button><button class="kb-key" onclick="kp('\'')">'</button>
+            <button class="kb-key" onclick="kp('&quot;')">"</button>
+        </div>
+        <div class="kb-row">
+            <button class="kb-key special" onclick="toggleShift()">Shift</button>
+            <button class="kb-key" onclick="kp('z')">z</button><button class="kb-key" onclick="kp('x')">x</button>
+            <button class="kb-key" onclick="kp('c')">c</button><button class="kb-key" onclick="kp('v')">v</button>
+            <button class="kb-key" onclick="kp('b')">b</button><button class="kb-key" onclick="kp('n')">n</button>
+            <button class="kb-key" onclick="kp('m')">m</button>
+            <button class="kb-key" onclick="kp(',')">,</button><button class="kb-key" onclick="kp('.')">.</button>
+            <button class="kb-key special" onclick="kp('backspace')">⌫</button>
+        </div>
+        <div class="kb-row">
+            <button class="kb-key" onclick="kp('@')">@</button>
+            <button class="kb-key" onclick="kp('!')">!</button>
+            <button class="kb-key" onclick="kp('?')">?</button>
+            <button class="kb-key space" onclick="kp(' ')">Space</button>
+            <button class="kb-key" onclick="kp(';')">;</button>
+            <button class="kb-key" onclick="kp(':')">:</button>
+            <button class="kb-key" onclick="kp('/')">/</button>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 20px; color: white; background: rgba(0,0,0,0.2); backdrop-filter: blur(10px); margin-top: auto;">
+        <p style="font-weight: 600; font-size: 0.95rem;">By Ms. Tran Thuy Vy | English 10 © 2026 Interactive Learning | Student-led Version</p>
+    </footer>
+
+    <script>
+        function toggleTheory(el) {
+            const content = el.nextElementSibling;
+            const iconWrapper = el.querySelector('.icon-wrapper');
+            if (content.style.display === "none") {
+                content.style.display = "block";
+                iconWrapper.innerHTML = '<i data-lucide="minus"></i>';
+            } else {
+                content.style.display = "none";
+                iconWrapper.innerHTML = '<i data-lucide="plus"></i>';
+            }
+            lucide.createIcons();
+        }
+
+        function toggleCheck(el) { 
+            el.classList.toggle('checked'); 
+            if(el.classList.contains('checked')) confetti({ particleCount: 50, spread: 70, origin: { y: 0.8 }, colors: ['#4facfe', '#00f2fe', '#00cec9'] }); 
+        }
+
+        // --- DATA WITH EXPLANATIONS ---
+        const Data = {
+            ex3: [
+                { q: "billions of photos <u>have been uploaded</u>...", a: "a", exp: "Use 'have' + 'been' + past participle for Present Perfect Affirmative." },
+                { q: "<u>have</u> traditional cameras <u>been replaced</u>...?", a: "c", exp: "Question mark with 'have... been replaced' is Present Perfect Interrogative." },
+                { q: "Messages <u>can</u> also <u>be sent</u>...", a: "g", exp: "'Can' is a modal verb in affirmative form." },
+                { q: "The technology <u>hasn't been perfected</u>...", a: "b", exp: "'Hasn't' indicates Present Perfect Negative." },
+                { q: "these devices <u>won't be sold</u>...", a: "f", exp: "'Won't' (will not) indicates Will Future Negative." },
+                { q: "<u>Will</u> cameras <u>be replaced</u>...?", a: "e", exp: "Question mark with 'Will' indicates Will Future Interrogative." },
+                { q: "They <u>can't be replaced</u> yet...", a: "h", exp: "'Can't' (cannot) is a modal verb in negative form." },
+                { q: "they <u>may be taken over</u>...", a: "g", exp: "'May' is a modal verb in affirmative form." },
+                { q: "our lives <u>will be changed</u>...", a: "d", exp: "'Will be changed' is Will Future Affirmative." }
+            ],
+            ex4: [
+                { q: "1. The weather (control) ___ by humans.", a: "will be controlled", exp: "Future predictions use 'will + be + past participle (V3/ed)'." },
+                { q: "2. We (all / connect) ___ to computers so that we can think faster.", a: "will all be connected", exp: "Adverb 'all' goes between 'will' and 'be'." },
+                { q: "3. Only two languages (speak) ___ in the world.", a: "will be spoken", exp: "The past participle of 'speak' is 'spoken'." },
+                { q: "4. Hotels (build) ___ on the moon.", a: "will be built", exp: "The past participle of 'build' is 'built'." }
+            ],
+            ex6: [
+                { q: "1. 100 million photos (take) ___.", a: "have been taken", exp: "Plural subject ('photos') uses 'have been' + V3 ('taken')." },
+                { q: "2. 208,000 mobile phones (sell) ___.", a: "have been sold", exp: "Plural subject uses 'have been' + V3 ('sold')." },
+                { q: "3. 1.7 million photos (upload) ___ to Instagram.", a: "have been uploaded", exp: "Plural subject uses 'have been' + V3 ('uploaded')." },
+                { q: "4. 350 million photos (share) ___ with friends on Facebook.", a: "have been shared", exp: "Plural subject uses 'have been' + V3 ('shared')." },
+                { q: "5. 8.3 million hours of video (watch) ___ on YouTube.", a: "have been watched", exp: "Plural subject uses 'have been' + V3 ('watched')." }
+            ],
+            ex7: [
+                { q: "1. photograph / at school?", a: "Have you ever been photographed at school", exp: "Format: Have/Has + object + ever + been + V3/ed?" },
+                { q: "2. punish / for something you didn't do?", a: "Have you ever been punished for something you didn't do", exp: "Format: Have/Has + object + ever + been + V3/ed?" },
+                { q: "3. hurt / while doing sport?", a: "Have you ever been hurt while doing sport", exp: "Format: Have/Has + object + ever + been + V3/ed?" },
+                { q: "4. criticise / by a good friend?", a: "Have you ever been criticised by a good friend", exp: "Format: Have/Has + object + ever + been + V3/ed?" }
+            ],
+            quiz: [
+                { q: "The weather ___ by humans in the future.", o: ["will control", "will be controlled", "controls"], a: 1 },
+                { q: "Billions of photos ___ to social networks recently.", o: ["have been uploaded", "will be uploaded", "upload"], a: 0 },
+                { q: "___ you ever been punished for something you didn't do?", o: ["Did", "Are", "Have"], a: 2 },
+                { q: "These gadgets ___ in shops for a while.", o: ["won't be sold", "don't sell", "hasn't been sold"], a: 0 },
+                { q: "Information ___ accessed with these wearable gadgets.", o: ["can be", "can", "has be"], a: 0 },
+                { q: "Hotels ___ on the moon one day.", o: ["will build", "are built", "will be built"], a: 2 },
+                { q: "208,000 mobile phones ___ in the past hour.", o: ["have sold", "have been sold", "will be sold"], a: 1 },
+                { q: "The technology ___ perfected yet.", o: ["hasn't been", "won't be", "can't be"], a: 0 },
+                { q: "Will cameras ___ replaced by wearable gadgets?", o: ["been", "be", "are"], a: 1 },
+                { q: "They ___ replaced yet, but maybe soon.", o: ["can't be", "won't", "haven't"], a: 0 },
+                { q: "Our lives ___ changed by these devices soon.", o: ["have been", "can't be", "will be"], a: 2 },
+                { q: "100 million photos ___ taken today.", o: ["have been", "will be", "can be"], a: 0 },
+                { q: "A new wearable gadget ___ invented recently.", o: ["has been", "will be", "can be"], a: 0 },
+                { q: "Messages ___ sent simply by blinking.", o: ["can be", "have been", "will"], a: 0 },
+                { q: "___ traditional cameras been replaced by these gadgets?", o: ["Have", "Will", "Are"], a: 0 },
+                { q: "In the future, we ___ all be connected to computers.", o: ["will", "have", "can"], a: 0 },
+                { q: "A lot of new apps ___ developed recently.", o: ["have been", "has been", "will be"], a: 0 },
+                { q: "The broken screen ___ repaired easily by a technician.", o: ["can be", "can", "has be"], a: 0 },
+                { q: "Many jobs ___ taken over by AI in the next decade.", o: ["may be", "have been", "was"], a: 0 },
+                { q: "___ your computer ever been infected by a virus?", o: ["Has", "Have", "Will"], a: 0 }
+            ]
+        };
+
+        // --- GLOBAL APP WITH TASK TRACKER ---
+        const App = {
+            score: 0,
+            currentClass: "",
+            tasksStatus: {
+                survey: { done: false, name: 'Lead-in: Live Survey' },
+                reading: { done: false, name: 'Lead-in: Reading Ex 1 & 2' },
+                ex3: { done: false, name: 'Grammar 1: Ex 3 (Match Tenses)' },
+                ex4: { done: false, name: 'Grammar 1: Ex 4 (Future Predictions)' },
+                ex6: { done: false, name: 'Grammar 2: Ex 6 (Present Perfect)' },
+                ex7: { done: false, name: 'Grammar 2: Ex 7 (Have you ever...?)' },
+                ex5b: { done: false, name: 'Grammar Builder: Ex 5' },
+                ex6b: { done: false, name: 'Grammar Builder: Ex 6 (SuperCloud)' },
+                ex7b: { done: false, name: 'Grammar Builder: Ex 7 (Rewrite)' },
+                writing: { done: false, name: 'Writing Practice (Predictions)' },
+                speaking: { done: false, name: 'Speaking Challenge' },
+                tug: { done: false, name: 'Tug Game Quiz' }
+            },
+            init() {
+                lucide.createIcons();
+                this.renderPractice();
+                Survey.init();
+                Game.init();
+                WritingApp.init();
+                ReadingApp.init();
+            },
+            login() {
+                const name = document.getElementById("student-name").value;
+                const cls = document.getElementById("class-name").value;
+                if(name && cls) {
+                    this.currentClass = cls;
+                    document.getElementById("user-info").innerText = `${name} | ${cls}`;
+                    document.getElementById("login-overlay").style.display = "none";
+                    confetti({ particleCount: 100, spread: 100, zIndex: 3001 });
+                    this.silentAutoSave(); 
+                }
+            },
+            nav(id) {
+                document.querySelectorAll(".tab-panel").forEach(t => t.classList.remove("active"));
+                document.querySelectorAll(".tab-btn").forEach(n => n.classList.remove("active"));
+                document.getElementById(id).classList.add("active");
+                event.currentTarget.classList.add("active");
+                if(id !== 'tuggame') Game.pause();
+                
+                if (id === 'wrapup') {
+                    this.checkMissingTasks();
+                }
+            },
+            addPoints(pts) {
+                this.score += pts;
+                document.getElementById('total-points').innerText = this.score + " PTS";
+                let el = document.querySelector('.score-board');
+                el.style.transform = 'scale(1.1)';
+                el.style.borderColor = 'var(--success)';
+                setTimeout(() => { el.style.transform = 'scale(1)'; el.style.borderColor = 'rgba(255,255,255,0.4)'; }, 300);
+            },
+            
+            renderPractice() {
+                const ex3 = document.getElementById("ex3-form");
+                Data.ex3.forEach((item, i) => {
+                    ex3.innerHTML += `<div class="question-row"><input type="text" class="small-input" data-ans="${item.a}" data-exp="${item.exp}" placeholder="a-h" maxlength="1"> <div class="question-col"><span>${item.q}</span></div></div>`;
+                });
+                
+                const ex4 = document.getElementById("ex4-form");
+                Data.ex4.forEach((item, i) => {
+                    ex4.innerHTML += `<div class="question-row"><div class="question-col"><span>${item.q}</span> <input type="text" data-ans="${item.a}" data-exp="${item.exp}" placeholder="Type here..."></div></div>`;
+                });
+                
+                const ex6 = document.getElementById("ex6-form");
+                Data.ex6.forEach((item, i) => {
+                    ex6.innerHTML += `<div class="question-row"><div class="question-col"><span>${item.q}</span> <input type="text" data-ans="${item.a}" data-exp="${item.exp}" placeholder="Type here..."></div></div>`;
+                });
+                
+                const ex7 = document.getElementById("ex7-form");
+                Data.ex7.forEach((item, i) => {
+                    ex7.innerHTML += `<div class="question-row"><div class="question-col"><span>${item.q}</span> <input type="text" data-ans="${item.a}" data-exp="${item.exp}" placeholder="Type your question..."></div></div>`;
+                });
+            },
+            
+            submitTask(taskId, btnEl, containerId) {
+                this.tasksStatus[taskId].done = true;
+                
+                if(btnEl) {
+                    btnEl.innerHTML = `<i data-lucide="check"></i> Submitted`;
+                    btnEl.style.background = 'var(--success)';
+                    btnEl.disabled = true;
+                    if (btnEl.parentElement && btnEl.parentElement.classList.contains('btn-group')) {
+                        btnEl.parentElement.querySelectorAll('button').forEach(b => b.disabled = true);
+                    }
+                    lucide.createIcons();
+                }
+
+                if(containerId) {
+                    const container = document.getElementById(containerId);
+                    if(container) {
+                        container.querySelectorAll('input, textarea, .click-word, button').forEach(el => {
+                            if (el.tagName === 'SPAN') {
+                                el.classList.add('locked');
+                                el.style.pointerEvents = 'none';
+                            } else if (el.id !== 'toggle-kb-btn') {
+                                el.disabled = true;
+                            }
+                        });
+                    }
+                }
+
+                this.silentAutoSave();
+                confetti({ particleCount: 50, spread: 60, zIndex: 2000, origin: { y: 0.8 } });
+            },
+
+            // 1-Chance Check Button Logic (Validation without points)
+            checkForm(formId, checkBtn) {
+                const inputs = document.getElementById(formId).querySelectorAll('input');
+                inputs.forEach(inp => {
+                    const cleanVal = inp.value.toLowerCase().trim().replace(/[.,!'’"“”()?]/g, "").replace(/\s+/g, " ");
+                    const answers = inp.dataset.ans.split('|');
+                    let isCorrect = false;
+                    
+                    answers.forEach(ans => {
+                        const cleanAns = ans.toLowerCase().replace(/[.,!'’"“”()?]/g, "").replace(/\s+/g, " ");
+                        if(cleanVal === cleanAns && cleanVal !== "") isCorrect = true;
+                    });
+                    
+                    let existingExp = inp.parentElement.querySelector('.explanation-box');
+                    if (existingExp) existingExp.remove();
+
+                    if(isCorrect) {
+                        inp.classList.add('correct'); inp.classList.remove('incorrect');
+                    } else {
+                        inp.classList.add('incorrect'); inp.classList.remove('correct');
+                        
+                        let expText = inp.dataset.exp || `Expected format: ${answers[0]}`;
+                        let expDiv = document.createElement('div');
+                        expDiv.className = 'explanation-box';
+                        expDiv.innerHTML = `<i data-lucide="info"></i> <strong>Correction Hint:</strong> ${expText}`;
+                        inp.parentElement.appendChild(expDiv);
+                        expDiv.style.display = 'block';
+                    }
+                });
+                lucide.createIcons();
+                
+                if(checkBtn) {
+                    checkBtn.disabled = true;
+                }
+            },
+
+            // Final Submit Button Logic for Grammar tasks
+            submitFormTask(taskId, formId, submitBtn) {
+                const inputs = document.getElementById(formId).querySelectorAll('input');
+                let pts = 0;
+                
+                inputs.forEach(inp => {
+                    const cleanVal = inp.value.toLowerCase().trim().replace(/[.,!'’"“”()?]/g, "").replace(/\s+/g, " ");
+                    const answers = inp.dataset.ans.split('|');
+                    let isCorrect = false;
+                    answers.forEach(ans => {
+                        const cleanAns = ans.toLowerCase().replace(/[.,!'’"“”()?]/g, "").replace(/\s+/g, " ");
+                        if(cleanVal === cleanAns && cleanVal !== "") isCorrect = true;
+                    });
+                    
+                    inp.classList.remove('incorrect', 'correct');
+                    if(isCorrect) {
+                        inp.classList.add('correct');
+                        pts += 5; // 5 points per correct grammar blank
+                    } else {
+                        inp.classList.add('incorrect');
+                    }
+                });
+                
+                this.addPoints(pts); 
+                this.submitTask(taskId, submitBtn, formId);
+            },
+
+            resetForm(formId, resetBtn) {
+                document.getElementById(formId).querySelectorAll('input').forEach(inp => {
+                    inp.value = "";
+                    inp.classList.remove('incorrect', 'correct');
+                    let existingExp = inp.parentElement.querySelector('.explanation-box');
+                    if (existingExp) existingExp.remove();
+                });
+                
+                if (resetBtn && resetBtn.parentElement) {
+                    const checkBtn = resetBtn.parentElement.querySelector('.btn-check');
+                    if(checkBtn) checkBtn.disabled = false;
+                }
+            },
+
+            checkMissingTasks() {
+                const warningDiv = document.getElementById('missing-tasks-warning');
+                let missing = [];
+                for (let key in this.tasksStatus) {
+                    if (!this.tasksStatus[key].done) {
+                        missing.push(`<li style="margin-bottom: 5px;">${this.tasksStatus[key].name}</li>`);
+                    }
+                }
+                
+                if (missing.length > 0) {
+                    warningDiv.style.display = 'block';
+                    warningDiv.style.background = 'rgba(214, 48, 49, 0.05)';
+                    warningDiv.style.borderColor = 'var(--danger)';
+                    warningDiv.innerHTML = `<h4 style="color: var(--danger); margin-bottom:15px; font-size: 1.1rem; font-family: var(--font-head);"><i data-lucide="alert-triangle" style="vertical-align: text-bottom;"></i> Wait! You haven't submitted these tasks:</h4><ul style="margin-left: 20px; font-weight: 600; color: #2d3436;">${missing.join('')}</ul><p style="margin-top:15px; font-size:0.95rem; font-style: italic; color: #636e72;">Please go back to those tabs and click the <strong>Submit Task</strong> button before turning in your final assignment.</p>`;
+                } else {
+                    warningDiv.style.display = 'block';
+                    warningDiv.style.background = 'rgba(0, 184, 148, 0.05)';
+                    warningDiv.style.borderColor = 'var(--success)';
+                    warningDiv.innerHTML = `<h4 style="color: var(--success); font-family: var(--font-head);"><i data-lucide="check-circle" style="vertical-align: text-bottom;"></i> Excellent! All individual tasks are submitted.</h4><p style="margin-top: 5px; font-weight: 500; color: #2d3436;">You are fully ready to turn in your final assignment below.</p>`;
+                }
+                lucide.createIcons();
+            },
+
+            generatePayload() {
+                const studentName = document.getElementById("student-name").value || "Anonymous";
+                const rawClass = document.getElementById("class-name").value || "No Class";
+                const className = "\u200B" + rawClass; 
+                
+                let detailedReport = "STUDENT RESULTS:\n";
+
+                // Add Survey Results
+                detailedReport += `\n--- SURVEY ---\nQ1: ${Survey.votes.q1 || 'No Answer'}\nQ2: ${Survey.votes.q2 || 'No Answer'}\n`;
+                
+                // Add Reading Results
+                detailedReport += `\n--- Reading (Ex 1 & 2) ---\n`;
+                document.querySelectorAll('#interactive-reading .click-word').forEach((el) => {
+                    let state = parseInt(el.getAttribute('data-state') || '0');
+                    let expectedState = 0;
+                    let type = el.getAttribute('data-type');
+                    if(type === 'ppp') expectedState = 1; else if(type === 'mod') expectedState = 2; else if(type === 'fut') expectedState = 3;
+                    if (state !== 0 || expectedState !== 0) {
+                       let isCorrect = (state === expectedState) ? "🟢" : "🔴";
+                       detailedReport += `Word '${el.innerText}' -> ${isCorrect}\n`;
+                    }
+                });
+
+                // Grammar Forms
+                document.querySelectorAll('form').forEach(form => {
+                    detailedReport += `\n--- ${form.id} ---\n`;
+                    form.querySelectorAll('input').forEach((inp, idx) => {
+                        let cleanVal = inp.value.toLowerCase().trim().replace(/[.,!'’"“”()?]/g, "").replace(/\s+/g, " ");
+                        let answers = inp.dataset.ans.split('|');
+                        let isCorrect = answers.some(ans => cleanVal === ans.toLowerCase().replace(/[.,!'’"“”()?]/g, "").replace(/\s+/g, " "));
+                        let icon = cleanVal === "" ? "⚪" : (isCorrect ? "🟢" : "🔴");
+                        let expectedAnswer = inp.dataset.ans ? inp.dataset.ans.split('|')[0] : 'N/A';
+                        detailedReport += `Q${idx+1}: ${inp.value || 'Blank'} ${icon} - Expected: ${expectedAnswer}\n`;
+                    });
+                });
+
+                // Append Tug Game Score
+                let quizScoreText = Game.playerTeam ? `Score: ${Game.score[Game.playerTeam]} correct answers against Computer (${Game.score[Game.oppTeam]})` : `Not played`;
+                detailedReport += `\n--- TUG GAME QUIZ ---\n${quizScoreText}\n`;
+
+                // Gather writing answers
+                let writing = [];
+                document.querySelectorAll('.writing-textarea').forEach((t, index) => {
+                    if(t.value.trim() !== "") writing.push(`Q${index + 1}: ${t.value.trim()}`);
+                });
+                let writingContent = writing.length > 0 ? writing.join("\n") : "No writing submitted";
+                
+                // Gather speech transcript
+                let speechText = document.getElementById('speech-result').innerText;
+                if (speechText === "Press start to speak..." || speechText === "Listening...") speechText = "No speech submitted";
+                
+                return {
+                    studentName: studentName,
+                    className: className,
+                    totalScore: this.score,
+                    writingContent: detailedReport + "\n\n--- WRITING ---\n" + writingContent,
+                    speechTranscript: speechText
+                };
+            },
+
+            async silentAutoSave() {
+                const studentName = document.getElementById("student-name").value;
+                if(!studentName) return; 
+
+                const toast = document.getElementById("autosave-toast");
+                toast.style.display = "flex";
+                toast.style.gap = "8px";
+                toast.style.alignItems = "center";
+                setTimeout(() => { toast.style.opacity = "1"; }, 10);
+
+                const payload = this.generatePayload();
+
+                try {
+                    await fetch("https://script.google.com/macros/s/AKfycbzShqmQrErDFAi-roEnBNQMnVk6HyghwUb6_MnMhNqfJDtKGhZlx5-OUEx8w85sx24Z/exec", {
+                        method: "POST",
+                        mode: "no-cors", 
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(payload)
+                    });
+                } catch (error) {
+                    console.log("Autosave silent failure", error);
+                }
+                
+                setTimeout(() => {
+                    toast.style.opacity = "0";
+                    setTimeout(() => { toast.style.display = "none"; }, 300);
+                }, 1000);
+            },
+
+            async submitFinalWork() {
+                const deadline = new Date("2026-05-31T23:59:00"); 
+                const now = new Date();
+                
+                if (now > deadline) {
+                    alert("The deadline for this assignment (31 May 2026) has passed. Final submissions are closed.");
+                    return; 
+                }
+                
+                const btn = document.getElementById("final-submit-btn");
+                const originalText = btn.innerHTML;
+                const payload = this.generatePayload();
+
+                try {
+                    btn.disabled = true;
+                    btn.innerHTML = `<i data-lucide="loader" class="lucide-spin"></i> Sending data to Teacher...`;
+                    lucide.createIcons();
+
+                    await fetch("https://script.google.com/macros/s/AKfycbzShqmQrErDFAi-roEnBNQMnVk6HyghwUb6_MnMhNqfJDtKGhZlx5-OUEx8w85sx24Z/exec", {
+                        method: "POST",
+                        mode: "no-cors", 
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    btn.innerHTML = `<i data-lucide="check-circle"></i> WORK SUBMITTED SUCCESSFULLY!`;
+                    btn.style.background = "var(--success)";
+                    lucide.createIcons();
+                    confetti({ particleCount: 200, spread: 100, zIndex: 3000 });
+                    alert("Success! Your results have been safely sent to Ms. Vy. Your answers are now permanently frozen.");
+
+                    document.querySelectorAll('input:not(#student-name):not(#class-name), textarea, button:not(.tab-btn):not(#final-submit-btn):not(#toggle-kb-btn)').forEach(el => {
+                        el.disabled = true;
+                        el.style.opacity = '0.6';
+                        el.style.cursor = 'not-allowed';
+                        if(el.tagName === "BUTTON") {
+                            el.style.boxShadow = "none";
+                            el.style.transform = "none";
+                        }
+                    });
+                    
+                } catch (error) {
+                    console.error("Submission Error:", error);
+                    alert("There was an issue sending your work. Please check your internet connection and try again.");
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                    lucide.createIcons();
+                }
+            }
+        };
+
+        // --- GLOBAL SURVEY CHARTS (CLASS RESULTS) ---
+        let classChartQ1 = null;
+        let classChartQ2 = null;
+
+        async function fetchLeaderboard() {
+            const tableBody = document.getElementById('leaderboard-body');
+            const totalSub = document.getElementById('total-submissions');
+            
+            if (App.currentClass) {
+                document.getElementById('lb-class-display').innerText = App.currentClass;
+            }
+
+            tableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 30px; color: #636e72;"><i data-lucide="loader" class="lucide-spin"></i> Fetching live results for your class...</td></tr>`;
+            lucide.createIcons();
+
+            try {
+                const classParam = App.currentClass ? encodeURIComponent(App.currentClass) : "";
+                const response = await fetch(`https://script.google.com/macros/s/AKfycbzShqmQrErDFAi-roEnBNQMnVk6HyghwUb6_MnMhNqfJDtKGhZlx5-OUEx8w85sx24Z/exec?action=getLeaderboard&className=${classParam}`);
+                const data = await response.json();
+                
+                if(data && data.success) {
+                    totalSub.innerText = data.totalSubmissions || 0;
+                    
+                    // Render Class Survey Charts safely
+                    if (data.survey) {
+                        if (classChartQ1) classChartQ1.destroy();
+                        if (classChartQ2) classChartQ2.destroy();
+
+                        const classCanvas1 = document.getElementById('class-chart-q1');
+                        if (classCanvas1) {
+                            classChartQ1 = new Chart(classCanvas1.getContext('2d'), {
+                                type: 'doughnut', data: { labels: ['Yes', 'No'], datasets: [{ data: [data.survey.q1.yes, data.survey.q1.no], backgroundColor: ['#0984e3', '#00cec9'], borderWidth: 0 }] },
+                                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+                            });
+                        }
+
+                        const classCanvas2 = document.getElementById('class-chart-q2');
+                        if (classCanvas2) {
+                            classChartQ2 = new Chart(classCanvas2.getContext('2d'), {
+                                type: 'doughnut', data: { labels: ['Yes', 'No'], datasets: [{ data: [data.survey.q2.yes, data.survey.q2.no], backgroundColor: ['#fd79a8', '#d63031'], borderWidth: 0 }] },
+                                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+                            });
+                        }
+                    }
+
+                    if (data.leaderboard.length === 0) {
+                        tableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 20px;">No submissions for this class yet. Be the first!</td></tr>`;
+                        return;
+                    }
+                    
+                    tableBody.innerHTML = '';
+                    data.leaderboard.forEach((student, index) => {
+                        let rankClass = index === 0 ? 'rank-1' : (index === 1 ? 'rank-2' : (index === 2 ? 'rank-3' : ''));
+                        let rankIcon = index === 0 ? '🥇' : (index === 1 ? '🥈' : (index === 2 ? '🥉' : index + 1));
+                        
+                        tableBody.innerHTML += `
+                            <tr class="${rankClass}">
+                                <td style="font-weight:bold; font-size:1.2rem;">${rankIcon}</td>
+                                <td style="font-weight:600; color:var(--dark);">${student.name}</td>
+                                <td>${student.className}</td>
+                                <td style="font-weight:bold; color:var(--primary);">${student.score} pts</td>
+                            </tr>
+                        `;
+                    });
+                } else {
+                    throw new Error("Invalid response data");
+                }
+            } catch (err) {
+                console.error("Leaderboard error:", err);
+                tableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 30px; color: var(--danger);">Unable to load leaderboard. Please make sure the Teacher's Google Script is updated with the new 'doGet' filtering function.</td></tr>`;
+            }
+        }
+
+        // --- VIRTUAL KEYBOARD ---
+        let currentInput = null;
+        let shiftActive = false;
+
+        function kp(key) {
+            if (!currentInput) return;
+            if (key === 'backspace') currentInput.value = currentInput.value.slice(0, -1);
+            else currentInput.value += shiftActive ? key.toUpperCase() : key;
+            currentInput.dispatchEvent(new Event('input'));
+        }
+        function toggleShift() {
+            shiftActive = !shiftActive;
+            document.querySelectorAll('.kb-key').forEach(b => {
+                if (b.innerText.length===1 && /[a-z]/i.test(b.innerText)) b.innerText = shiftActive ? b.innerText.toUpperCase() : b.innerText.toLowerCase();
+            });
+        }
+        function closeKeyboard() { 
+            document.getElementById('virtual-keyboard').classList.remove('visible'); 
+            document.body.style.paddingBottom = "0px";
+            if(currentInput) currentInput.blur();
+        }
+        function toggleKeyboard() {
+            const kb = document.getElementById('virtual-keyboard');
+            if (kb.classList.contains('visible')) {
+                closeKeyboard();
+            } else {
+                kb.classList.add('visible');
+                document.body.style.paddingBottom = "300px";
+                if(currentInput) currentInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            lucide.createIcons();
+        }
+        document.addEventListener('focusin', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                currentInput = e.target; 
+            }
+        });
+
+        // --- LIVE SURVEY STATE (No Local Charts) ---
+        const Survey = {
+            votes: { q1: null, q2: null },
+            init() {
+                // Local charts removed from student view; class charts handle themselves in fetchLeaderboard()
+            },
+            addVote(q, index, btnEl) {
+                if(this.votes[q] === null) {
+                    App.addPoints(10); // Reward 10 points for answering
+                }
+                this.votes[q] = (index === 0) ? 'Yes' : 'No';
+
+                // Visual update
+                let btnGroup = document.getElementById(`survey-${q}-btns`);
+                if (btnGroup) {
+                    btnGroup.querySelectorAll('button').forEach(b => {
+                        b.classList.remove('btn-check');
+                        b.classList.add('btn-primary');
+                    });
+                }
+                if (btnEl) {
+                    btnEl.classList.remove('btn-primary');
+                    btnEl.classList.add('btn-check');
+                }
+            }
+        };
+
+        // --- READING APP (CLICKABLE PASSIVES) ---
+        const ReadingApp = {
+            text: `Over the past 20 years, the way in which we take, keep and share photos [ppp:has been transformed]. Most people use smartphones and digital cameras to take photos, and billions of photos [ppp:have been uploaded] to social networking sites. So [ppp:have traditional celluloid film cameras been replaced] by these gadgets? Not yet, but it won't be long. \n\n However, things are going to change again. Wearable gadgets that [ppp:have recently been developed] allow you to take a photo simply by blinking. Messages [mod:can also be sent] and information [mod:can be accessed] with these wearable gadgets. The technology [ppp:hasn't been perfected], so these devices [fut:won't be sold] in shops for a while. \n\n [fut:Will cameras and mobiles be replaced] by wearable gadgets? They [mod:can't be replaced] yet but they [mod:may be taken over] sooner than we think. What's certain is that our lives [fut:will be changed] by these devices in ways we haven't even thought of.`,
+            
+            init() {
+                const container = document.getElementById('interactive-reading');
+                if(!container) return;
+                let html = '';
+                
+                const paragraphs = this.text.split('\n\n');
+                paragraphs.forEach(p => {
+                    html += '<p style="margin-bottom: 15px;">';
+                    let parts = p.split(/(\[[a-z]{3}:.*?\])/g);
+                    parts.forEach(part => {
+                        if (part.startsWith('[')) {
+                            let type = part.substring(1, 4);
+                            let phrase = part.substring(5, part.length - 1);
+                            let words = phrase.split(' ');
+                            words.forEach(w => {
+                                html += `<span class="click-word target" data-type="${type}" data-state="0" onclick="ReadingApp.cycleColor(this)">${w}</span> `;
+                            });
+                        } else {
+                            let words = part.split(' ');
+                            words.forEach(w => {
+                                if(w.trim() !== '') {
+                                    html += `<span class="click-word normal" data-state="0" onclick="ReadingApp.cycleColor(this)">${w}</span> `;
+                                }
+                            });
+                        }
+                    });
+                    html += '</p>';
+                });
+                container.innerHTML = html;
+            },
+            
+            cycleColor(el) {
+                if (el.classList.contains('locked')) return;
+                let state = parseInt(el.getAttribute('data-state') || '0');
+                state = (state + 1) % 4;
+                el.setAttribute('data-state', state);
+                
+                el.classList.remove('state-1', 'state-2', 'state-3');
+                if (state === 1) el.classList.add('state-1');
+                else if (state === 2) el.classList.add('state-2');
+                else if (state === 3) el.classList.add('state-3');
+            },
+
+            checkAnswers(btn) {
+                document.querySelectorAll('#interactive-reading .click-word').forEach(el => {
+                    let type = el.getAttribute('data-type');
+                    let state = parseInt(el.getAttribute('data-state') || '0');
+                    
+                    let expectedState = 0;
+                    if(type === 'ppp') expectedState = 1;
+                    else if(type === 'mod') expectedState = 2;
+                    else if(type === 'fut') expectedState = 3;
+                    
+                    el.classList.remove('wrong', 'correct');
+                    if (state !== 0 || expectedState !== 0) {
+                        if(state === expectedState) el.classList.add('correct');
+                        else el.classList.add('wrong');
+                    }
+                });
+                if(btn) btn.disabled = true;
+            },
+
+            submitTask(submitBtn) {
+                let correctCount = 0;
+
+                document.querySelectorAll('#interactive-reading .click-word').forEach(el => {
+                    let type = el.getAttribute('data-type');
+                    let state = parseInt(el.getAttribute('data-state') || '0');
+                    let expectedState = 0;
+                    if(type === 'ppp') expectedState = 1;
+                    else if(type === 'mod') expectedState = 2;
+                    else if(type === 'fut') expectedState = 3;
+
+                    el.classList.remove('wrong', 'correct');
+                    if (state !== 0 || expectedState !== 0) {
+                        if(state === expectedState) {
+                            el.classList.add('correct');
+                            correctCount++;
+                        } else {
+                            el.classList.add('wrong');
+                        }
+                    }
+                });
+
+                // Award 1 point per correct highlight
+                App.addPoints(correctCount); 
+                App.submitTask('reading', submitBtn, 'interactive-reading');
+            },
+
+            reset(resetBtn) {
+                document.querySelectorAll('#interactive-reading .click-word').forEach(el => {
+                    el.setAttribute('data-state', '0');
+                    el.classList.remove('state-1', 'state-2', 'state-3', 'wrong', 'correct', 'locked');
+                    el.style.pointerEvents = 'auto';
+                });
+                if (resetBtn && resetBtn.parentElement) {
+                    const checkBtn = resetBtn.parentElement.querySelector('.btn-check');
+                    if(checkBtn) checkBtn.disabled = false;
+                }
+            }
+        };
+
+        // --- TUG GAME ---
+        const Game = {
+            playerTeam: null,
+            oppTeam: null,
+            score: { red: 0, blue: 0 },
+            ropePos: 0, 
+            isActive: false,
+            pool: [],
+            currentIdx: 0,
+            timerInt: null,
+            timeLeft: 15,
+
+            init() {
+                document.getElementById('tug-game-board').style.display = 'none';
+                document.getElementById('team-selection').style.display = 'block';
+                document.getElementById("tug-over-overlay").style.display = "none";
+            },
+
+            selectTeam(team) {
+                this.playerTeam = team;
+                this.oppTeam = team === 'red' ? 'blue' : 'red';
+                
+                document.getElementById('team-selection').style.display = 'none';
+                document.getElementById('tug-game-board').style.display = 'grid';
+                
+                document.getElementById(`${this.oppTeam}-quiz-box`).innerHTML = `<div style="text-align:center; color:#b2bec3; margin-top:30px; font-size:1.1rem;"><strong>Opponent (Computer)</strong><br>Waiting for your move...</div>`;
+                document.getElementById(`${this.oppTeam}-timer`).style.opacity = '0.3';
+                document.getElementById(`${this.oppTeam}-remaining`).style.display = 'none';
+                
+                document.getElementById("tug-controls").style.display = "flex";
+                this.resetPools();
+                this.reset();
+            },
+
+            resetPools() {
+                this.pool = [...Array(Data.quiz.length).keys()];
+            },
+
+            start() {
+                if(this.isActive || !this.playerTeam) return;
+                this.isActive = true;
+                this.startTimer();
+                document.getElementById("tug-over-overlay").style.display = "none";
+            },
+
+            pause() {
+                this.isActive = false;
+                clearInterval(this.timerInt);
+            },
+
+            startTimer() {
+                clearInterval(this.timerInt);
+                this.timeLeft = 15;
+                document.getElementById(`${this.playerTeam}-timer`).innerText = this.timeLeft;
+                
+                this.timerInt = setInterval(() => {
+                    if(!this.isActive) return;
+                    this.timeLeft--;
+                    document.getElementById(`${this.playerTeam}-timer`).innerText = this.timeLeft;
+                    if(this.timeLeft <= 0) this.handleAnswer(-1); 
+                }, 1000);
+            },
+
+            generateNewQuestion() {
+                if(this.pool.length === 0) {
+                    this.checkWinCondition();
+                    return;
+                }
+
+                const poolIdx = Math.floor(Math.random() * this.pool.length);
+                this.currentIdx = this.pool.splice(poolIdx, 1)[0];
+                
+                document.getElementById(`${this.playerTeam}-remaining`).innerText = `Questions left: ${this.pool.length + 1}`;
+                
+                const quiz = Data.quiz[this.currentIdx];
+                document.getElementById(`${this.playerTeam}-question`).innerHTML = quiz.q;
+                const optionsCont = document.getElementById(`${this.playerTeam}-options`);
+                optionsCont.innerHTML = "";
+                
+                quiz.o.forEach((opt, i) => {
+                    const btn = document.createElement("button");
+                    btn.className = "option-button";
+                    btn.innerText = opt; 
+                    btn.onclick = () => this.handleAnswer(i);
+                    optionsCont.appendChild(btn);
+                });
+            },
+
+            handleAnswer(selectedIdx) {
+                if(!this.isActive) return;
+                
+                const correct = Data.quiz[this.currentIdx].a;
+                const buttons = document.querySelectorAll(`#${this.playerTeam}-options .option-button`);
+                buttons.forEach(b => b.disabled = true);
+
+                const isCorrect = selectedIdx === correct;
+                if(isCorrect) {
+                    if(selectedIdx !== -1) buttons[selectedIdx].classList.add("correct");
+                    this.score[this.playerTeam]++;
+                    this.ropePos += (this.playerTeam === 'blue' ? 12 : -12);
+                    App.addPoints(10); // Reward 10 pts for correct answer
+                    confetti({ particleCount: 50, spread: 60, zIndex: 2000, origin: { y: 0.8 } });
+                } else {
+                    if(selectedIdx !== -1) buttons[selectedIdx].classList.add("wrong");
+                    buttons[correct].classList.add("correct");
+                    this.score[this.oppTeam]++;
+                    this.ropePos += (this.playerTeam === 'blue' ? -12 : 12);
+                }
+
+                this.updateVisuals();
+
+                setTimeout(() => {
+                    if(this.isActive) {
+                        this.generateNewQuestion();
+                        this.startTimer();
+                    }
+                }, 1500);
+            },
+
+            updateVisuals() {
+                document.getElementById("red-game-score").innerText = this.score.red;
+                document.getElementById("blue-game-score").innerText = this.score.blue;
+                
+                let cappedRopePos = this.ropePos;
+                if (cappedRopePos > 60) cappedRopePos = 60;
+                if (cappedRopePos < -60) cappedRopePos = -60;
+
+                const visualPull = cappedRopePos * 2.5; 
+                document.getElementById("tug-image-wrapper").style.transform = `translateX(${visualPull}px)`;
+            },
+
+            checkWinCondition() {
+                let msg = "IT'S A TIE!";
+                if (this.score[this.playerTeam] > this.score[this.oppTeam]) msg = "YOU WIN!";
+                else if (this.score[this.oppTeam] > this.score[this.playerTeam]) msg = "COMPUTER WINS!";
+                else if (this.ropePos < 0) msg = (this.playerTeam === 'red' ? "YOU WIN!" : "COMPUTER WINS!");
+                else if (this.ropePos > 0) msg = (this.playerTeam === 'blue' ? "YOU WIN!" : "COMPUTER WINS!");
+                
+                this.endGame(msg);
+            },
+
+            endGame(msg) {
+                this.pause();
+                document.getElementById("win-message").innerText = msg;
+                document.getElementById("tug-over-overlay").style.display = "flex";
+                if(msg === "YOU WIN!") confetti({particleCount: 200, spread: 160, zIndex: 2000});
+            },
+
+            submitTugTask(btnEl) {
+                this.pause();
+                const controls = document.getElementById("tug-controls");
+                if (controls) {
+                    controls.querySelectorAll('button').forEach(b => b.disabled = true);
+                }
+                document.querySelectorAll('.option-button').forEach(b => b.disabled = true);
+                App.submitTask('tug', btnEl, null);
+            },
+
+            reset() {
+                this.pause();
+                this.ropePos = 0;
+                this.score.red = 0;
+                this.score.blue = 0;
+                this.resetPools();
+                document.getElementById("tug-over-overlay").style.display = "none";
+                this.updateVisuals();
+                if(this.playerTeam) {
+                    this.generateNewQuestion();
+                }
+            }
+        };
+
+        // --- WRITING APP (EX 5 / 7) ---
+        const WritingApp = {
+            timerInt: null,
+            timeLeft: 300,
+            currentSet: 0,
+            sets: [
+                [
+                    "1. I agree that the weather will be controlled by humans because...",
+                    "2. One wearable gadget I would love to invent is...",
+                    "3. If I had a smart-watch, it could be used for..."
+                ],
+                [
+                    "1. I'm not sure that hotels will be built on the moon because...",
+                    "2. The most useful piece of technology that has been invented recently is...",
+                    "3. In the future, robots may be used to..."
+                ],
+                [
+                    "1. I agree that we will all be connected to computers because...",
+                    "2. The worst invention that has ever been made is...",
+                    "3. In 50 years, classrooms will be replaced by..."
+                ],
+                [
+                    "1. I wouldn't say that only two languages will be spoken because...",
+                    "2. Have you ever been helped by a piece of technology? Explain.",
+                    "3. Soon, our daily routines will be changed by..."
+                ]
+            ],
+            init() {
+                this.renderSet(0);
+            },
+            rollDice() {
+                let newSet;
+                do {
+                    newSet = Math.floor(Math.random() * this.sets.length);
+                } while (newSet === this.currentSet && this.sets.length > 1);
+                
+                this.currentSet = newSet;
+                this.renderSet(newSet);
+                
+                clearInterval(this.timerInt);
+                this.timeLeft = 300;
+                this.timerInt = null;
+                document.getElementById('write-timer-display').innerText = "05:00";
+                document.getElementById('start-write-timer-btn').disabled = false;
+                
+                const btn = document.getElementById('submit-writing-btn');
+                btn.disabled = false;
+                btn.classList.add('btn-check');
+                btn.style.background = 'var(--primary)';
+                btn.innerHTML = `<i data-lucide="send"></i> Submit Writing Task`;
+                lucide.createIcons();
+            },
+            renderSet(idx) {
+                document.getElementById('writing-set-title').innerText = `Set ${idx + 1}`;
+                const container = document.getElementById('writing-questions-container');
+                container.innerHTML = "";
+                
+                this.sets[idx].forEach((cue) => {
+                    container.innerHTML += `
+                        <div style="margin-bottom: 20px;">
+                            <label style="font-weight: 700; font-size: 1.1rem; color: var(--primary); display: block; margin-bottom: 10px;">${cue}</label>
+                            <textarea class="writing-textarea" oninput="WritingApp.autoStartTimer()" rows="2" style="width: 100%; border: 2px solid #b2bec3; border-radius: 8px; padding: 12px; font-family: var(--font-body); font-size: 1.05rem; resize: vertical;" placeholder="Type your answer here... (Timer starts automatically)"></textarea>
+                        </div>
+                    `;
+                });
+            },
+            autoStartTimer() {
+                if (!this.timerInt && this.timeLeft === 300) {
+                    this.startTimer();
+                }
+            },
+            startTimer() {
+                if(this.timerInt) return; 
+                document.getElementById('start-write-timer-btn').disabled = true;
+                this.timerInt = setInterval(() => {
+                    this.timeLeft--;
+                    let m = Math.floor(this.timeLeft / 60);
+                    let s = this.timeLeft % 60;
+                    document.getElementById('write-timer-display').innerText = `0${m}:${s<10?'0'+s:s}`;
+                    if(this.timeLeft <= 0) {
+                        clearInterval(this.timerInt);
+                        this.submitAnswers(document.getElementById('submit-writing-btn'));
+                        alert("Time's up! Your answers have been locked in and saved.");
+                    }
+                }, 1000);
+            },
+            submitAnswers(btnEl) {
+                clearInterval(this.timerInt);
+                const textareas = document.querySelectorAll('.writing-textarea');
+                let validCount = 0;
+                textareas.forEach(ta => {
+                    if (ta.value.trim() !== "") validCount++;
+                });
+                
+                if (validCount === 0) {
+                    alert("Please write something before submitting!");
+                    return;
+                }
+                
+                // Reward 10 points per completed writing task
+                App.addPoints(validCount * 10);
+                App.submitTask('writing', btnEl, 'writing-questions-container');
+            }
+        };
+
+        // --- RANDOM CUES (FOR SPEAKING CHALLENGE) ---
+        const RandomCues = {
+            cues: [
+                "A gadget that translates dog barks. How can it be used?",
+                "Smart contact lenses. What can be seen?",
+                "A jacket with built-in heating. How is it controlled?",
+                "Flying shoes. Where will they be flown?",
+                "A memory-recording chip. When can memories be watched?",
+                "A ring that changes colour with your mood. How will it be worn?",
+                "Glasses that translate languages instantly. Where can they be used?",
+                "A bracelet that controls your phone. How can messages be sent?",
+                "A hat that plays music to your brain. How will the volume be changed?",
+                "Gloves that type in mid-air. What can be typed?"
+            ],
+            nextCue() {
+                const idx = Math.floor(Math.random() * this.cues.length);
+                const el = document.getElementById('random-cue-text');
+                el.style.opacity = 0;
+                setTimeout(() => {
+                    el.innerText = this.cues[idx];
+                    el.style.opacity = 1;
+                }, 300);
+            }
+        };
+
+        // --- SPEAKING PREP TIMER ---
+        const SpeakingPrep = {
+            timerInt: null,
+            timeLeft: 300,
+            startTimer() {
+                const btn = document.getElementById('start-prep-btn');
+                btn.disabled = true;
+                clearInterval(this.timerInt);
+                this.timerInt = setInterval(() => {
+                    this.timeLeft--;
+                    let m = Math.floor(this.timeLeft / 60);
+                    let s = this.timeLeft % 60;
+                    document.getElementById('prep-timer-display').innerText = `0${m}:${s<10?'0'+s:s}`;
+                    if(this.timeLeft <= 0) {
+                        clearInterval(this.timerInt);
+                        alert("Preparation time is up! Get ready to speak.");
+                        btn.disabled = false;
+                        this.timeLeft = 300;
+                        document.getElementById('prep-timer-display').innerText = `05:00`;
+                    }
+                }, 1000);
+            }
+        };
+
+        // --- SPEAKING CHALLENGE TIMER ---
+        const SpeakingChallenge = {
+            timerInt: null,
+            timeLeft: 120,
+            start() {
+                this.reset();
+                document.getElementById('start-challenge-btn').disabled = true;
+                RandomCues.nextCue();
+                
+                this.timerInt = setInterval(() => {
+                    this.timeLeft--;
+                    let m = Math.floor(this.timeLeft / 60);
+                    let s = this.timeLeft % 60;
+                    document.getElementById('challenge-timer-display').innerText = `0${m}:${s<10?'0'+s:s}`;
+                    
+                    if (this.timeLeft > 0 && this.timeLeft % 30 === 0) {
+                        RandomCues.nextCue();
+                    }
+                    
+                    if (this.timeLeft <= 0) {
+                        clearInterval(this.timerInt);
+                        document.getElementById('random-cue-text').innerText = "Time's up! Great job!";
+                        document.getElementById('start-challenge-btn').disabled = false;
+                        alert("Speaking challenge finished!");
+                    }
+                }, 1000);
+            },
+            reset() {
+                clearInterval(this.timerInt);
+                this.timeLeft = 120;
+                document.getElementById('challenge-timer-display').innerText = "02:00";
+                document.getElementById('random-cue-text').innerText = "Click \"Start Challenge\" to begin!";
+                document.getElementById('start-challenge-btn').disabled = false;
+            }
+        };
+
+        // --- SPEECH RECOGNITION APP ---
+        const SpeechApp = {
+            rec: null,
+            isRec: false,
+            finalTranscript: '',
+            toggleRecording() {
+                if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) return alert("Speech recognition API not supported in this browser. Try Google Chrome.");
+                if (this.isRec) {
+                    this.rec.stop();
+                    this.isRec = false;
+                    document.getElementById('record-btn').innerHTML = `<i data-lucide="mic"></i> Start Recording`;
+                    document.getElementById('record-btn').style.background = "var(--success)";
+                    lucide.createIcons();
+                } else {
+                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                    this.rec = new SpeechRecognition();
+                    this.rec.lang = 'en-US';
+                    this.rec.continuous = true;
+                    this.rec.interimResults = true;
+                    this.rec.onstart = () => {
+                        document.getElementById('record-btn').innerHTML = `<i data-lucide="square"></i> Stop Recording`;
+                        document.getElementById('record-btn').style.background = "var(--danger)";
+                        document.getElementById('speech-result').innerText = "Listening...";
+                        this.finalTranscript = '';
+                        lucide.createIcons();
+                    };
+                    this.rec.onresult = (e) => {
+                        let interimTranscript = '';
+                        for (let i = e.resultIndex; i < e.results.length; ++i) {
+                            if (e.results[i].isFinal) {
+                                this.finalTranscript += e.results[i][0].transcript + ' ';
+                            } else {
+                                interimTranscript += e.results[i][0].transcript;
+                            }
+                        }
+                        document.getElementById('speech-result').innerText = `"${this.finalTranscript}${interimTranscript}"`;
+                    };
+                    this.rec.start();
+                    this.isRec = true;
+                }
+            },
+            submitSpeakingTask(btnEl) {
+                let speechText = document.getElementById('speech-result').innerText;
+                if (speechText === "Press start to speak..." || speechText === "Listening..." || speechText.trim() === '""' || speechText.trim() === '') {
+                    alert("Please record your speech before submitting!");
+                    return;
+                }
+                
+                // Reward 10 points for completion
+                App.addPoints(10);
+                
+                // Disable controls
+                document.getElementById('record-btn').disabled = true;
+                document.getElementById('start-challenge-btn').disabled = true;
+                document.getElementById('start-prep-btn').disabled = true;
+                
+                App.submitTask('speaking', btnEl, null);
+            }
+        };
+
+        window.onload = () => {
+            App.init();
+        };
+    </script>
+</body>
+</html>
